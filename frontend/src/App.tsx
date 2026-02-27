@@ -102,7 +102,7 @@ function App() {
 
         <div className="row">
           <div>
-            <label htmlFor="garageInput">SqFt: </label>
+            <label htmlFor="garageInput">Garage: </label>
             <input id="garageInput" type="number" onChange={(event) => setGarage(Number(event.target.value))}></input>
           </div>
 
