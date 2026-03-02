@@ -1,9 +1,11 @@
-function Template(props) {
+import type { TemplateProps } from "../types"
+
+function Template(props: TemplateProps) {
   const address = props.address
   const mlsNumber = props.mlsNumber
   const bedrooms = props.bedrooms
-  const fullBahtrooms = props.fullBathrooms
-  const halfBahtrooms = props.halfBathrooms
+  const fullBathrooms = props.fullBathrooms
+  const halfBathrooms = props.halfBathrooms
   const garage = props.garage
   const sqft = props.sqft
   const sqftLot = props.sqftLot
@@ -12,10 +14,10 @@ function Template(props) {
     <div className="container" id="templateContainer">
       <p>{address}</p>
       <p>MLS #: {mlsNumber}</p>
-      <p>Bedrooms: {bedrooms}</p>
-      <p>Bathrooms: {fullBahtrooms}|{halfBahtrooms}</p>
-      <p>Garage: {garage}</p>
-      <p>Total SqFt: {sqft} SqFt on {sqftLot} SqFt Lot</p>
+      <p>Bedrooms: {bedrooms.toString()}</p>
+      <p>Bathrooms: {fullBathrooms.toString()}|{halfBathrooms.toString()}</p>
+      <p>Garage: {garage.toString()}</p>
+      <p>Total SqFt: {sqft.toString()} SqFt on {sqftLot.toString()} SqFt Lot</p>
     </div>
   )
   /*
