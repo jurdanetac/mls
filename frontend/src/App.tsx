@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import CopyToClipboardButton from './components/CopyToClipboardButton'
 
 function Template(props) {
   const address = props.address
@@ -133,8 +134,7 @@ function App() {
           sqft={sqft}
           sqftLot={sqftLot}
         />
-        {/* TODO: feature */}
-        <button type="button">Copy to clipboard</button>
+        <CopyToClipboardButton />
       </section>
     </>
   )
