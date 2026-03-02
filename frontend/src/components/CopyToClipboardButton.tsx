@@ -3,7 +3,7 @@ function copyTextToClipboard() {
 }
 
 function CopyToClipboardButton() {
-    return <button type="button" onClick={copyTextToClipboard}>Copy to Clipboard</button>
+    return <button id="copyToClipboardButton" type="button" onClick={copyTextToClipboard}>Copy to Clipboard</button>
 }
 
 export default CopyToClipboardButton
