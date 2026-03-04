@@ -10,3 +10,10 @@ export type TemplateProps = {
   listingPrice: number;
   age: number;
 };
+
+export type FieldInputProps = {
+  type: string;
+  label: string;
+  inputId: string;
+  onChange: Function;
+};
