@@ -1,9 +1,17 @@
 function copyTextToClipboard() {
-    window.alert("TODO")
+  window.alert("TODO");
 }
 
 function CopyToClipboardButton() {
-    return <button id="copyToClipboardButton" type="button" onClick={copyTextToClipboard}>Copy to Clipboard</button>
+  return (
+    <button
+      id="copyToClipboardButton"
+      type="button"
+      onClick={copyTextToClipboard}
+    >
+      Copy to Clipboard
+    </button>
+  );
 }
 
-export default CopyToClipboardButton
+export default CopyToClipboardButton;

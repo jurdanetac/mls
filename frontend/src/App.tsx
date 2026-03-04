@@ -1,17 +1,19 @@
-import { useState } from 'react'
-import './App.css'
-import CopyToClipboardButton from './components/CopyToClipboardButton'
-import Template from './components/Template'
+import { useState } from "react";
+import "./App.css";
+import CopyToClipboardButton from "./components/CopyToClipboardButton";
+import Template from "./components/Template";
 
 function App() {
-  const [address, setAddress] = useState("")
-  const [mlsNumber, setMlsNumber] = useState("")
-  const [bedrooms, setBedrooms] = useState(0)
-  const [fullBathrooms, setFullBathrooms] = useState(0)
-  const [halfBathrooms, setHalfBathrooms] = useState(0)
-  const [garage, setGarage] = useState(0)
-  const [sqft, setSqft] = useState(0)
-  const [sqftLot, setSqftLot] = useState(0)
+  const [address, setAddress] = useState("");
+  const [mlsNumber, setMlsNumber] = useState("");
+  const [bedrooms, setBedrooms] = useState(0);
+  const [fullBathrooms, setFullBathrooms] = useState(0);
+  const [halfBathrooms, setHalfBathrooms] = useState(0);
+  const [garage, setGarage] = useState(0);
+  const [sqft, setSqft] = useState(0);
+  const [sqftLot, setSqftLot] = useState(0);
+  const [listingPrice, setListingPrice] = useState(0);
+  const [age, setAge] = useState(0);
 
   return (
     <>
@@ -24,46 +26,115 @@ function App() {
           <div className="row">
             <div>
               <label htmlFor="addressInput">Address: </label>
-              <input id="addressInput" type="text" onChange={(event) => setAddress(event.target.value)}></input>
+              <input
+                id="addressInput"
+                type="text"
+                onChange={(event) => setAddress(event.target.value)}
+              ></input>
             </div>
 
             <div>
               <label htmlFor="mlsNumberInput">MLS #: </label>
-              <input id="mlsNumberInput" type="text" onChange={(event) => setMlsNumber(event.target.value)}></input>
+              <input
+                id="mlsNumberInput"
+                type="text"
+                onChange={(event) => setMlsNumber(event.target.value)}
+              ></input>
             </div>
           </div>
 
           <div className="row">
             <div>
               <label htmlFor="bedroomsInput">Bedrooms: </label>
-              <input id="bedroomsInput" type="number" onChange={(event) => setBedrooms(Number(event.target.value))}></input>
+              <input
+                id="bedroomsInput"
+                type="number"
+                onChange={(event) => setBedrooms(Number(event.target.value))}
+              ></input>
             </div>
 
             <div>
               <label htmlFor="fullBathroomsInput">Full Bathrooms: </label>
-              <input id="fullBahtroomsInput" type="number" onChange={(event) => setFullBathrooms(Number(event.target.value))}></input>
+              <input
+                id="fullBahtroomsInput"
+                type="number"
+                onChange={(event) =>
+                  setFullBathrooms(Number(event.target.value))
+                }
+              ></input>
             </div>
 
             <div>
               <label htmlFor="halfBathroomsInput">Half Bathrooms: </label>
-              <input id="halfBathroomsInput" type="number" onChange={(event) => setHalfBathrooms(Number(event.target.value))}></input>
+              <input
+                id="halfBathroomsInput"
+                type="number"
+                onChange={(event) =>
+                  setHalfBathrooms(Number(event.target.value))
+                }
+              ></input>
+            </div>
+
+            <div>
+              <label htmlFor="listingPriceInput">Listing Price: $</label>
+              <input
+                id="listingPriceInput"
+                type="number"
+                onChange={(event) =>
+                  setListingPrice(Number(event.target.value))
+                }
+              ></input>
             </div>
           </div>
 
           <div className="row">
             <div>
               <label htmlFor="garageInput">Garage: </label>
-              <input id="garageInput" type="number" onChange={(event) => setGarage(Number(event.target.value))}></input>
+              <input
+                id="garageInput"
+                type="number"
+                onChange={(event) => setGarage(Number(event.target.value))}
+              ></input>
             </div>
 
             <div>
               <label htmlFor="sqftInput">SqFt: </label>
-              <input id="sqftInput" type="number" onChange={(event) => setSqft(Number(event.target.value))}></input>
+              <input
+                id="sqftInput"
+                type="number"
+                onChange={(event) => setSqft(Number(event.target.value))}
+              ></input>
             </div>
 
             <div>
               <label htmlFor="sqftLotInput">SqFt Lot: </label>
-              <input id="sqftLotInput" type="number" onChange={(event) => setSqftLot(Number(event.target.value))}></input>
+              <input
+                id="sqftLotInput"
+                type="number"
+                onChange={(event) => setSqftLot(Number(event.target.value))}
+              ></input>
+            </div>
+          </div>
+
+          <div className="row">
+            <div>
+              <label htmlFor="listingPriceInput">Listing Price: </label>
+              <input
+                id="listingPriceInput"
+                type="number"
+                onChange={(event) =>
+                  setListingPrice(Number(event.target.value))
+                }
+              ></input>
+            </div>
+
+            <div>
+              <label htmlFor="ageInput">Age: </label>
+              <input
+                id="ageInput"
+                type="number"
+                onChange={(event) => setAge(Number(event.target.value))}
+              ></input>
             </div>
           </div>
         </div>
@@ -82,11 +153,12 @@ function App() {
           garage={garage}
           sqft={sqft}
           sqftLot={sqftLot}
+          listingPrice={listingPrice}
         />
         <CopyToClipboardButton />
       </section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

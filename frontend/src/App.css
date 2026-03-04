@@ -1,18 +1,18 @@
 .row {
-    display: flex;
+  display: flex;
 }
 
 .container {
-    border: 1px black solid;
-    padding: 5px;
+  border: 1px black solid;
+  padding: 5px;
 }
 
 /* Clear space in template to try and mimick MLS styles */
 #templateContainer p {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 #copyToClipboardButton {
-    margin-top: 20px;
+  margin-top: 20px;
 }
