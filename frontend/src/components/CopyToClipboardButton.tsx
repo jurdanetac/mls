@@ -1,8 +1,8 @@
-function copyTextToClipboard() {
+const copyTextToClipboard = () => {
   window.alert("TODO");
-}
+};
 
-function CopyToClipboardButton() {
+const CopyToClipboardButton = () => {
   return (
     <button
       id="copyToClipboardButton"
@@ -12,6 +12,6 @@ function CopyToClipboardButton() {
       Copy to Clipboard
     </button>
   );
-}
+};
 
 export default CopyToClipboardButton;

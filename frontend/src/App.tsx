@@ -4,7 +4,7 @@ import CopyToClipboardButton from "./components/CopyToClipboardButton";
 import Template from "./components/Template";
 import FieldInput from "./components/FieldInput";
 
-function App() {
+const App = () => {
   const [address, setAddress] = useState("");
   const [mlsNumber, setMlsNumber] = useState("");
   const [bedrooms, setBedrooms] = useState(0);
@@ -144,6 +144,6 @@ function App() {
       </section>
     </>
   );
-}
+};
 
 export default App;

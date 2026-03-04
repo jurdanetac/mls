@@ -1,6 +1,6 @@
 import type { FieldInputProps } from "../types";
 
-function FieldInput(props: FieldInputProps) {
+const FieldInput = (props: FieldInputProps) => {
   const type = props.type;
   const label = props.label;
   const inputId = props.inputId;
@@ -16,6 +16,6 @@ function FieldInput(props: FieldInputProps) {
       ></input>
     </div>
   );
-}
+};
 
 export default FieldInput;

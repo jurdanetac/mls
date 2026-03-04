@@ -1,6 +1,6 @@
 import type { TemplateProps } from "../types";
 
-function Template(props: TemplateProps) {
+const Template = (props: TemplateProps) => {
   const address = props.address;
   const mlsNumber = props.mlsNumber;
   const bedrooms = props.bedrooms;
@@ -50,6 +50,6 @@ function Template(props: TemplateProps) {
 
   MLS Comps attached:
   */
-}
+};
 
 export default Template;
