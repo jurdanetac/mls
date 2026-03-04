@@ -3,8 +3,10 @@ import "./App.css";
 import CopyToClipboardButton from "./components/CopyToClipboardButton";
 import Template from "./components/Template";
 import FieldInput from "./components/FieldInput";
+import FieldTextarea from "./components/FieldTextarea";
 
 const App = () => {
+  // TODO: Refactor to use a single state object for all fields instead of individual states for each field
   const [address, setAddress] = useState("");
   const [mlsNumber, setMlsNumber] = useState("");
   const [bedrooms, setBedrooms] = useState(0);
@@ -15,6 +17,15 @@ const App = () => {
   const [sqftLot, setSqftLot] = useState(0);
   const [listingPrice, setListingPrice] = useState(0);
   const [age, setAge] = useState(0);
+  const [status, setStatus] = useState("");
+  const [dom, setDom] = useState(0);
+  const [listingAgent, setListingAgent] = useState("");
+  const [listingAgentOffice, setListingAgentOffice] = useState("");
+  const [schoolDistrict, setSchoolDistrict] = useState("");
+  const [arv, setArv] = useState(0);
+  const [disclosures, setDisclosures] = useState("");
+  const [oh, setOh] = useState("");
+  const [privateNotes, setPrivateNotes] = useState("");
 
   return (
     <>
@@ -94,7 +105,7 @@ const App = () => {
 
             <FieldInput
               type="number"
-              label="SqFt Lot:"
+              label="SqFt Lot"
               inputId="sqftLotInput"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setSqftLot(Number(event.target.value))
@@ -120,6 +131,89 @@ const App = () => {
                 setAge(Number(event.target.value))
               }
             />
+
+            <FieldInput
+              type="text"
+              label="Status"
+              inputId="statusInput"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setStatus(event.target.value);
+              }}
+            />
+          </div>
+
+          <div className="row">
+            <FieldInput
+              type="number"
+              label="DOM"
+              inputId="domInput"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setDom(Number(event.target.value))
+              }
+            />
+
+            <FieldInput
+              type="text"
+              label="Listing Agent"
+              inputId="listingAgentInput"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setListingAgent(event.target.value);
+              }}
+            />
+
+            <FieldInput
+              type="text"
+              label="Listing Agent Office"
+              inputId="listingAgentOfficeInput"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setListingAgentOffice(event.target.value);
+              }}
+            />
+          </div>
+
+          <div className="row">
+            <FieldInput
+              type="text"
+              label="School District"
+              inputId="schoolDistrictInput"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setSchoolDistrict(event.target.value);
+              }}
+            />
+
+            <FieldInput
+              type="number"
+              label="ARV ($)"
+              inputId="arvInput"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setArv(Number(event.target.value))
+              }
+            />
+          </div>
+          <div className="row">
+            <FieldTextarea
+              label="Disclosures"
+              inputId="disclosuresInput"
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+                setDisclosures(event.target.value);
+              }}
+            />
+
+            <FieldTextarea
+              label="Open House"
+              inputId="ohInput"
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+                setOh(event.target.value);
+              }}
+            />
+
+            <FieldTextarea
+              label="Private Notes"
+              inputId="privateNotesInput"
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+                setPrivateNotes(event.target.value);
+              }}
+            />
           </div>
         </div>
       </section>
@@ -139,6 +233,15 @@ const App = () => {
           sqftLot={sqftLot}
           listingPrice={listingPrice}
           age={age}
+          status={status}
+          dom={dom}
+          listingAgent={listingAgent}
+          listingAgentOffice={listingAgentOffice}
+          schoolDistrict={schoolDistrict}
+          arv={arv}
+          disclosures={disclosures}
+          openHouse={oh}
+          privateNotes={privateNotes}
         />
         <CopyToClipboardButton />
       </section>

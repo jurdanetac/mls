@@ -9,10 +9,26 @@ export type TemplateProps = {
   sqftLot: number;
   listingPrice: number;
   age: number;
+  status: string;
+  dom: number;
+  listingAgent: string;
+  listingAgentOffice: string;
+  schoolDistrict: string;
+  arv: number;
+  disclosures: string;
+  openHouse: string;
+  privateNotes: string;
 };
 
+// TODO: improve prop types
 export type FieldInputProps = {
   type: string;
+  label: string;
+  inputId: string;
+  onChange: Function;
+};
+
+export type FieldTextareaProps = {
   label: string;
   inputId: string;
   onChange: Function;
