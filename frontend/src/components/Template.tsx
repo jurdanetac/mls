@@ -59,6 +59,7 @@ const Template = ({
         Listing Agent: {listingAgent} ({listingAgentOffice})
       </p>
       <p>School District: {schoolDistrict}</p>
+      <br />
       <p>ARV: {USDollar.format(arv)}</p>
       <p>
         Max Acquisition Price: {USDollar.format(maxAquisitionPrice)} -&gt;{" "}
@@ -66,10 +67,16 @@ const Template = ({
           {USDollar.format(acquisitionMargin)}
         </span>
       </p>
-      <p>Disclosures: {disclosures || "Not specified"}</p>
-      <p>OH: {openHouse || "Not specified"}</p>
-      <p>Private notes: {privateNotes || "Not specified"}</p>
       <br />
+      <p>Disclosures: {disclosures ? <></> : "Not specified"}</p>
+      <p>{disclosures}</p>
+      <p>OH: {openHouse ? <></> : "Not specified"}</p>
+      <p>{openHouse}</p>
+      <p>Private Notes: {privateNotes ? <></> : "Not specified"}</p>
+      <p>{privateNotes}</p>
+
+      <br />
+
       <p>MLS Comps attached:</p>
     </div>
   );
