@@ -1,5 +1,5 @@
 import type { TemplateProps } from "../types";
-import { USDollar } from "../utils";
+import { USDollar, numberWithCommas } from "../utils";
 
 const Template = ({
   address,
@@ -46,7 +46,7 @@ const Template = ({
       </p>
       <p>Garage: {garage.toString()}</p>
       <p>
-        Total SqFt: {sqft.toString()} SqFt on {sqftLot.toString()} SqFt Lot
+        Total SqFt: {numberWithCommas(sqft)} SqFt on {numberWithCommas(sqftLot)} SqFt Lot
       </p>
       <p>
         Listing Price: {USDollar.format(listingPrice)} (
