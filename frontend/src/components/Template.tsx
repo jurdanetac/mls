@@ -1,27 +1,33 @@
 import type { TemplateProps } from "../types";
 import { USDollar, numberWithCommas } from "../utils";
 
-const Template = ({
-  address,
-  mlsNumber,
-  bedrooms,
-  fullBathrooms,
-  halfBathrooms,
-  garage,
-  sqft,
-  sqftLot,
-  listingPrice,
-  age,
-  status,
-  dom,
-  listingAgent,
-  listingAgentOffice,
-  schoolDistrict,
-  arv,
-  disclosures,
-  openHouse,
-  privateNotes,
-}: TemplateProps) => {
+// Import css modules stylesheet as styles
+import styles from "./Template.module.css";
+
+const Template = (props: TemplateProps) => {
+  const {
+    address,
+    mlsNumber,
+    bedrooms,
+    fullBathrooms,
+    halfBathrooms,
+    garage,
+    sqft,
+    sqftLot,
+    listingPrice,
+    age,
+    status,
+    dom,
+    listingAgent,
+    listingAgentOffice,
+    schoolDistrict,
+    arv,
+    disclosures,
+    openHouse,
+    privateNotes,
+  } = props;
+
+  // Calculations
   const pricePerSqft = listingPrice / sqft;
   const maxAquisitionPrice = arv * 0.75;
   const acquisitionMargin = maxAquisitionPrice - listingPrice;
@@ -46,7 +52,8 @@ const Template = ({
       </p>
       <p>Garage: {garage.toString()}</p>
       <p>
-        Total SqFt: {numberWithCommas(sqft)} SqFt on {numberWithCommas(sqftLot)} SqFt Lot
+        Total SqFt: {numberWithCommas(sqft)} SqFt on {numberWithCommas(sqftLot)}{" "}
+        SqFt Lot
       </p>
       <p>
         Listing Price: {USDollar.format(listingPrice)} (
@@ -72,11 +79,16 @@ const Template = ({
       <p>{disclosures}</p>
       <p>OH: {openHouse ? <></> : "Not specified"}</p>
       <p>{openHouse}</p>
-      <p>Private Notes: {privateNotes ? <></> : "Not specified"}</p>
-      <p>{privateNotes}</p>
+
+      {privateNotes ? <br /> : null}
+      <p>
+        Private Notes: {privateNotes ? <br /> : "Not specified"}
+        <span className={styles.privateNotesSpan}>
+          {privateNotes ? privateNotes : null}
+        </span>
+      </p>
 
       <br />
-
       <p>MLS Comps attached:</p>
     </div>
   );
