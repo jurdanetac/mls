@@ -1,5 +1,5 @@
 import type { TemplateProps } from "../types";
-import { USDollar, numberWithCommas } from "../utils";
+import { USDollar, isValidURL, numberWithCommas } from "../utils";
 
 // Import css modules stylesheet as styles
 import styles from "./Template.module.css";
@@ -32,15 +32,13 @@ const Template = (props: TemplateProps) => {
   const maxAquisitionPrice = arv * 0.75;
   const acquisitionMargin = maxAquisitionPrice - listingPrice;
 
-  const stylesForAcquisitionMargin: React.CSSProperties = (function () {
-    if (acquisitionMargin > 0) {
-      return { color: "green", fontWeight: "bold", fontSize: "18px" };
-    } else if (acquisitionMargin < 0) {
-      return { color: "red", fontWeight: "bold", fontSize: "18px" };
-    } else {
-      return {};
-    }
-  })();
+  // choose a CSS class based on acquisition margin sign
+  const acquisitionMarginClass =
+    acquisitionMargin > 0
+      ? styles.marginPositive
+      : acquisitionMargin < 0
+        ? styles.marginNegative
+        : styles.marginNeutral;
 
   return (
     <div className="container" id="templateContainer">
@@ -70,15 +68,36 @@ const Template = (props: TemplateProps) => {
       <p>ARV: {USDollar.format(arv)}</p>
       <p>
         Max Acquisition Price: {USDollar.format(maxAquisitionPrice)} -&gt;{" "}
-        <span style={stylesForAcquisitionMargin}>
+        <span className={acquisitionMarginClass}>
           {USDollar.format(acquisitionMargin)}
         </span>
       </p>
       <br />
-      <p>Disclosures: {disclosures ? <></> : "Not specified"}</p>
-      <p>{disclosures}</p>
-      <p>OH: {openHouse ? <></> : "Not specified"}</p>
-      <p>{openHouse}</p>
+      <p>
+        Disclosures: {disclosures ? null : "Not specified"}
+        {isValidURL(disclosures) ? (
+          <a
+            href={
+              disclosures.startsWith("http")
+                ? disclosures
+                : `https://${disclosures}`
+            }
+            className={styles.disclosuresLink}
+          >
+            {disclosures}
+          </a>
+        ) : (
+          <span>{disclosures}</span>
+        )}
+      </p>
+
+      {openHouse ? <br /> : null}
+      <p>
+        OH: {openHouse ? <br /> : "Not specified"}
+        <span className={styles.openHouseSpan}>
+          {openHouse ? openHouse : null}
+        </span>
+      </p>
 
       {privateNotes ? <br /> : null}
       <p>

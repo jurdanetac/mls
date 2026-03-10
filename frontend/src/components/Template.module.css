@@ -1,4 +1,40 @@
+.openHouseSpan {
+}
+
+.disclosuresLink {
+  color: #0066cc;
+  text-decoration: none;
+}
+
 .privateNotesSpan {
   color: #993300;
   font-family: Verdana, sans-serif;
+}
+
+.openHouseSpan,
+.disclosuresLink,
+.privateNotesSpan {
+  font-size: 13px;
+}
+
+/* Max Acquisition Price */
+.marginPositive {
+  color: green;
+  font-weight: bold;
+}
+
+.marginNegative {
+  color: red;
+  font-weight: bold;
+}
+
+.marginNeutral {
+  color: black;
+  font-weight: bold;
+}
+
+.marginPositive,
+.marginNegative,
+.marginNeutral {
+  font-size: 14px;
 }
