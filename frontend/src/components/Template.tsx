@@ -43,7 +43,9 @@ const Template = (props: TemplateProps) => {
   return (
     <div className="container" id="templateContainer">
       <p>{address}</p>
-      <p>MLS #: {mlsNumber}</p>
+      <p>
+        MLS #: <span className={styles.mlsNumber}>{mlsNumber}</span>
+      </p>
       <p>Bedrooms: {bedrooms.toString()}</p>
       <p>
         Bathrooms: {fullBathrooms.toString()}|{halfBathrooms.toString()}
@@ -64,7 +66,9 @@ const Template = (props: TemplateProps) => {
         Listing Agent: {listingAgent} ({listingAgentOffice})
       </p>
       <p>School District: {schoolDistrict}</p>
+
       <br />
+
       <p>ARV: {USDollar.format(arv)}</p>
       <p>
         Max Acquisition Price: {USDollar.format(maxAquisitionPrice)} -&gt;{" "}
@@ -72,7 +76,9 @@ const Template = (props: TemplateProps) => {
           {USDollar.format(acquisitionMargin)}
         </span>
       </p>
+
       <br />
+
       <p>
         Disclosures: {disclosures ? null : "Not specified"}
         {isValidURL(disclosures) ? (
@@ -92,12 +98,12 @@ const Template = (props: TemplateProps) => {
       </p>
 
       {openHouse ? <br /> : null}
-      <p>
-        OH: {openHouse ? <br /> : "Not specified"}
-        <span className={styles.openHouseSpan}>
-          {openHouse ? openHouse : null}
-        </span>
-      </p>
+      <p>OH: {openHouse ? null : "Not specified"}</p>
+      <span className={styles.openHouseSpan}>
+        {openHouse ? (
+          <pre className={styles.openHouseSpan}>{openHouse}</pre>
+        ) : null}
+      </span>
 
       {privateNotes ? <br /> : null}
       <p>

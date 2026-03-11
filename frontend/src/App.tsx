@@ -213,7 +213,7 @@ const App = () => {
 
             <FieldTextarea
               label="Open House"
-              inputId="ohInput"
+              inputId="openHouseInput"
               onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
                 handleFormChange("openHouse", event.target.value)
               }

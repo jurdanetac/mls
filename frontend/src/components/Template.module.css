@@ -1,9 +1,16 @@
-.openHouseSpan {
+.mlsNumber {
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .disclosuresLink {
   color: #0066cc;
   text-decoration: none;
+}
+
+.openHouseSpan {
+  /* preserves tabs/newlines, wraps long lines */
+  white-space: pre-wrap;
 }
 
 .privateNotesSpan {
