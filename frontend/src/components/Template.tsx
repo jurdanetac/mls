@@ -1,5 +1,6 @@
 import type { TemplateProps } from "../types";
-import { USDollar, isValidURL, numberWithCommas } from "../utils";
+import { isValidURL } from "../utils/string.utils";
+import { USDollar, numberWithCommas } from "../utils/number.utils";
 
 // Import css modules stylesheet as styles
 import styles from "./Template.module.css";
