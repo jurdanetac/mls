@@ -1,6 +1,10 @@
 import type { TemplateProps } from "../types";
 import { isValidURL } from "../utils/string.utils";
-import { USDollar, numberWithCommas } from "../utils/number.utils";
+import {
+  USDollar,
+  USDollarExact,
+  numberWithCommas,
+} from "../utils/number.utils";
 
 // Import css modules stylesheet as styles
 import styles from "./Template.module.css";
@@ -57,7 +61,7 @@ const Template = (props: TemplateProps) => {
         SqFt Lot
       </p>
       <p>
-        Listing Price: {USDollar.format(listingPrice)} (
+        Listing Price: {USDollarExact.format(listingPrice)} (
         {USDollar.format(pricePerSqft)}/SqFt)
       </p>
       <p>Age: {age}</p>
@@ -70,11 +74,11 @@ const Template = (props: TemplateProps) => {
 
       <br />
 
-      <p>ARV: {USDollar.format(arv)}</p>
+      <p>ARV: {USDollarExact.format(arv)}</p>
       <p>
-        Max Acquisition Price: {USDollar.format(maxAquisitionPrice)} -&gt;{" "}
+        Max Acquisition Price: {USDollarExact.format(maxAquisitionPrice)} -&gt;{" "}
         <span className={acquisitionMarginClass}>
-          {USDollar.format(acquisitionMargin)}
+          {USDollarExact.format(acquisitionMargin)}
         </span>
       </p>
 
