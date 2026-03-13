@@ -1,13 +1,10 @@
 import type { TemplateProps } from "../types";
-import { isValidURL } from "../utils/string.utils";
+import { isValidURL, httpifyURL } from "../utils/string.utils";
 import {
   USDollar,
   USDollarExact,
   numberWithCommas,
 } from "../utils/number.utils";
-
-// Import css modules stylesheet as styles
-import styles from "./Template.module.css";
 
 const Template = (props: TemplateProps) => {
   const {
@@ -37,19 +34,33 @@ const Template = (props: TemplateProps) => {
   const maxAquisitionPrice = arv * 0.75;
   const acquisitionMargin = maxAquisitionPrice - listingPrice;
 
-  // choose a CSS class based on acquisition margin sign
-  const acquisitionMarginClass =
+  // shared style objects
+  const mlsNumberStyle = { fontWeight: "bold", fontSize: "14px" };
+  const disclosuresLinkStyle = {
+    color: "#0066cc",
+    textDecoration: "none",
+    fontSize: "13px",
+  };
+  const openHouseTextStyle = { whiteSpace: "pre-wrap", fontSize: "13px" };
+  const privateNotesStyle = {
+    color: "#993300",
+    fontFamily: "Verdana, sans-serif",
+    fontSize: "13px",
+  };
+
+  // choose inline styles based on acquisition margin sign
+  const acquisitionMarginStyle =
     acquisitionMargin > 0
-      ? styles.marginPositive
+      ? { color: "green", fontWeight: "bold", fontSize: "14px" }
       : acquisitionMargin < 0
-        ? styles.marginNegative
-        : styles.marginNeutral;
+        ? { color: "red", fontWeight: "bold", fontSize: "14px" }
+        : { color: "black", fontWeight: "bold", fontSize: "14px" };
 
   return (
     <div className="container" id="templateContainer">
       <p>
         {address} <br />
-        MLS #: <span className={styles.mlsNumber}>{mlsNumber}</span> <br />
+        MLS #: <span style={mlsNumberStyle}>{mlsNumber}</span> <br />
         Bedrooms: {bedrooms.toString()} <br />
         Bathrooms: {fullBathrooms.toString()}|{halfBathrooms.toString()} <br />
         Garage: {garage.toString()} <br />
@@ -67,7 +78,7 @@ const Template = (props: TemplateProps) => {
         Max Acquisition Price: {USDollarExact.format(
           maxAquisitionPrice,
         )} -&gt;{" "}
-        <span className={acquisitionMarginClass}>
+        <span style={acquisitionMarginStyle}>
           {USDollarExact.format(acquisitionMargin)}
         </span>
         <br />
@@ -75,16 +86,12 @@ const Template = (props: TemplateProps) => {
         Disclosures:{" "}
         {disclosures ? (
           isValidURL(disclosures) ? (
-            <a
-              href={
-                disclosures.startsWith("http")
-                  ? disclosures
-                  : `https://${disclosures}`
-              }
-              className={styles.disclosuresLink}
-            >
-              {disclosures}
-            </a>
+            <>
+              <a href={httpifyURL(disclosures)} style={disclosuresLinkStyle}>
+                {disclosures}
+              </a>
+              <br />
+            </>
           ) : (
             <span>{disclosures}</span>
           )
@@ -96,8 +103,8 @@ const Template = (props: TemplateProps) => {
         {openHouse ? (
           <>
             <br />
-            <span className={styles.openHouseSpan}>
-              <pre className={styles.openHouseSpan}>{openHouse}</pre>
+            <span style={openHouseTextStyle}>
+              <pre style={openHouseTextStyle}>{openHouse}</pre>
             </span>
           </>
         ) : null}
@@ -106,7 +113,7 @@ const Template = (props: TemplateProps) => {
         {privateNotes ? (
           <>
             <br />
-            <span className={styles.privateNotesSpan}>{privateNotes}</span>
+            <span style={privateNotesStyle}>{privateNotes}</span>
           </>
         ) : (
           "Not specified"

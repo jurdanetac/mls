@@ -7,6 +7,14 @@ export const isValidURL = (str: string) => {
   return res !== null;
 };
 
+export const httpifyURL = (url: string): string => {
+  if (isValidURL(url)) {
+    return url.startsWith("http") ? url : `https://${url}`;
+  }
+
+  throw new Error("Invalid URL");
+};
+
 // Note it won't catch URLs without protocol, so one must ensure to include it
 // Source: https://stackoverflow.com/a/5717133
 /*
