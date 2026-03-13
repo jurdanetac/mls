@@ -39,6 +39,8 @@ const App = () => {
     }));
   };
 
+  const templateRef = document.getElementById("templateContainer")!;
+
   return (
     <>
       <h1>MLS</h1>
@@ -235,7 +237,7 @@ const App = () => {
       <section>
         <h2>Template</h2>
         <Template {...form} />
-        <CopyTemplateButton address={form.address} />
+        <CopyTemplateButton element={templateRef} />
       </section>
     </>
   );

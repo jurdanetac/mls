@@ -1,50 +1,50 @@
-const copyTemplateAndOpenMail = async (address: string) => {
-  // Get client email address from environment variables
+const copyTemplateToClipboard = async (element: HTMLElement) => {
+  try {
+    const innerHTML = element.innerHTML;
+    const plainText = element.innerText; // Critical fallback
+
+    const blobHtml = new Blob([innerHTML], { type: "text/html" });
+    const blobText = new Blob([plainText], { type: "text/plain" });
+
+    const data = [
+      new ClipboardItem({
+        ["text/html"]: blobHtml,
+        ["text/plain"]: blobText, // Always include this
+      }),
+    ];
+
+    await navigator.clipboard.write(data);
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
+};
+
+const openMailClientWithSubject = (element: HTMLElement) => {
+  const plainText = element.innerText; // Critical fallback
+  const firstTextLine = plainText.split("\n")[0];
+
   const toMailAddress = import.meta.env.VITE_TO_MAIL_ADDRESS;
   const ccMailAddress = import.meta.env.VITE_CC_MAIL_ADDRESS;
-
-  // Encode the address for use in the mailto link
-  const encodedAddress = encodeURIComponent(address);
-  const mailToLink = `mailto:${toMailAddress}?cc=${ccMailAddress}&subject=${encodedAddress}&body=${encodedAddress}`;
-
-  // Open the default email client with the pre-filled email
+  const mailToLink = `mailto:${toMailAddress}?cc=${ccMailAddress}&subject=${encodeURIComponent(firstTextLine)}`;
   window.location.href = mailToLink;
-
-  // TODO: Copy the formatted template to clipboard
-  /*
-  // const innerText = element.innerText
-  const innerHTML = element.innerHTML || ""; // fallback to empty string if element is null
-
-  // const blobText = new Blob([plainText], { type: "text/plain" });
-
-  const blobHtml = new Blob([innerHTML], { type: "text/html" });
-
-  const data = [
-    new ClipboardItem({
-      ["text/html"]: blobHtml,
-      // ["text/plain"]: blobText,
-    }),
-  ];
-
-  await navigator.clipboard.write(data);
-  window.alert("Formatted text copied! Now just paste it in your email.");
-
-  const openEmail = () => {
-  const body = `Line 1\nLine 2\n\nBest regards, Your App`;
-  const encodedBody = encodeURIComponent(body);
-  window.location.href = `mailto:someone@example.com?subject=Hello&body=${encodedBody}`;
-};
-   */
 };
 
-const CopyTemplateButton = ({ address }: { address: string }) => {
+const copyTemplateAndOpenMail = async (element: HTMLElement) => {
+  await copyTemplateToClipboard(element);
+
+  const shouldOpenMailClient = window.confirm(
+    "Template copied! Do you want to open your email client now?",
+  );
+
+  if (shouldOpenMailClient) {
+    openMailClientWithSubject(element);
+  }
+};
+
+const CopyTemplateButton = ({ element }: { element: HTMLElement }) => {
   return (
-    <button
-      id="copyToClipboardButton"
-      type="button"
-      onClick={() => copyTemplateAndOpenMail(address)}
-    >
-      Send
+    <button type="button" onClick={() => copyTemplateAndOpenMail(element)}>
+      Copy Template
     </button>
   );
 };

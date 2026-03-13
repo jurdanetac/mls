@@ -11,6 +11,7 @@ import styles from "./Template.module.css";
 
 const Template = (props: TemplateProps) => {
   const {
+    address,
     mlsNumber,
     bedrooms,
     fullBathrooms,
@@ -47,78 +48,73 @@ const Template = (props: TemplateProps) => {
   return (
     <div className="container" id="templateContainer">
       <p>
-        MLS #: <span className={styles.mlsNumber}>{mlsNumber}</span>
-      </p>
-
-      <p>Bedrooms: {bedrooms.toString()}</p>
-      <p>
-        Bathrooms: {fullBathrooms.toString()}|{halfBathrooms.toString()}
-      </p>
-      <p>Garage: {garage.toString()}</p>
-      <p>
+        {address} <br />
+        MLS #: <span className={styles.mlsNumber}>{mlsNumber}</span> <br />
+        Bedrooms: {bedrooms.toString()} <br />
+        Bathrooms: {fullBathrooms.toString()}|{halfBathrooms.toString()} <br />
+        Garage: {garage.toString()} <br />
         Total SqFt: {numberWithCommas(sqft)} SqFt on {numberWithCommas(sqftLot)}{" "}
-        SqFt Lot
-      </p>
-      <p>
+        SqFt Lot <br />
         Listing Price: {USDollarExact.format(listingPrice)} (
-        {USDollar.format(pricePerSqft)}/SqFt)
-      </p>
-      <p>Age: {age}</p>
-      <p>Status: {status}</p>
-      <p>DOM: {dom}</p>
-      <p>
-        Listing Agent: {listingAgent} ({listingAgentOffice})
-      </p>
-      <p>School District: {schoolDistrict}</p>
-
-      <br />
-
-      <p>ARV: {USDollarExact.format(arv)}</p>
-      <p>
-        Max Acquisition Price: {USDollarExact.format(maxAquisitionPrice)} -&gt;{" "}
+        {USDollar.format(pricePerSqft)}/SqFt) <br />
+        Age: {age} <br />
+        Status: {status} <br />
+        DOM: {dom} <br />
+        Listing Agent: {listingAgent} ({listingAgentOffice}) <br />
+        School District: {schoolDistrict} <br />
+        <br />
+        ARV: {USDollarExact.format(arv)} <br />
+        Max Acquisition Price: {USDollarExact.format(
+          maxAquisitionPrice,
+        )} -&gt;{" "}
         <span className={acquisitionMarginClass}>
           {USDollarExact.format(acquisitionMargin)}
         </span>
-      </p>
-
-      <br />
-
-      <p>
-        Disclosures: {disclosures ? null : "Not specified"}
-        {isValidURL(disclosures) ? (
-          <a
-            href={
-              disclosures.startsWith("http")
-                ? disclosures
-                : `https://${disclosures}`
-            }
-            className={styles.disclosuresLink}
-          >
-            {disclosures}
-          </a>
+        <br />
+        <br />
+        Disclosures:{" "}
+        {disclosures ? (
+          isValidURL(disclosures) ? (
+            <a
+              href={
+                disclosures.startsWith("http")
+                  ? disclosures
+                  : `https://${disclosures}`
+              }
+              className={styles.disclosuresLink}
+            >
+              {disclosures}
+            </a>
+          ) : (
+            <span>{disclosures}</span>
+          )
         ) : (
-          <span>{disclosures}</span>
+          "Not specified"
         )}
-      </p>
-
-      {openHouse ? <br /> : null}
-      <p>OH: {openHouse ? null : "Not specified"}</p>
-      <span className={styles.openHouseSpan}>
+        <br />
+        OH: {openHouse ? null : "Not specified"}
         {openHouse ? (
-          <pre className={styles.openHouseSpan}>{openHouse}</pre>
+          <>
+            <br />
+            <span className={styles.openHouseSpan}>
+              <pre className={styles.openHouseSpan}>{openHouse}</pre>
+            </span>
+          </>
         ) : null}
-      </span>
-
-      {privateNotes ? <br /> : null}
-      <p>
-        Private Notes: {privateNotes ? <br /> : "Not specified"}
-        <span className={styles.privateNotesSpan}>
-          {privateNotes ? privateNotes : null}
-        </span>
+        <br />
+        Private Notes:{" "}
+        {privateNotes ? (
+          <>
+            <br />
+            <span className={styles.privateNotesSpan}>{privateNotes}</span>
+          </>
+        ) : (
+          "Not specified"
+        )}
+        <br />
+        <br />
+        MLS Comps attached:
       </p>
-
-      <br />
-      <p>MLS Comps attached:</p>
     </div>
   );
 };
