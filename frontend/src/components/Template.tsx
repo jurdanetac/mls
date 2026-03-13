@@ -11,7 +11,6 @@ import styles from "./Template.module.css";
 
 const Template = (props: TemplateProps) => {
   const {
-    address,
     mlsNumber,
     bedrooms,
     fullBathrooms,
@@ -47,10 +46,10 @@ const Template = (props: TemplateProps) => {
 
   return (
     <div className="container" id="templateContainer">
-      <p>{address}</p>
       <p>
         MLS #: <span className={styles.mlsNumber}>{mlsNumber}</span>
       </p>
+
       <p>Bedrooms: {bedrooms.toString()}</p>
       <p>
         Bathrooms: {fullBathrooms.toString()}|{halfBathrooms.toString()}

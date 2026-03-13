@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import CopyToClipboardButton from "./components/CopyToClipboardButton";
+import CopyTemplateButton from "./components/CopyTemplateButton";
 import Template from "./components/Template";
 import FieldInput from "./components/FieldInput";
 import FieldTextarea from "./components/FieldTextarea";
@@ -235,7 +235,7 @@ const App = () => {
       <section>
         <h2>Template</h2>
         <Template {...form} />
-        <CopyToClipboardButton />
+        <CopyTemplateButton address={form.address} />
       </section>
     </>
   );

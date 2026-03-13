@@ -1,6 +1,17 @@
-const copyTextToClipboard = async () => {
-  const element = document.getElementById("templateContainer") as HTMLElement;
+const copyTemplateAndOpenMail = async (address: string) => {
+  // Get client email address from environment variables
+  const toMailAddress = import.meta.env.VITE_TO_MAIL_ADDRESS;
+  const ccMailAddress = import.meta.env.VITE_CC_MAIL_ADDRESS;
 
+  // Encode the address for use in the mailto link
+  const encodedAddress = encodeURIComponent(address);
+  const mailToLink = `mailto:${toMailAddress}?cc=${ccMailAddress}&subject=${encodedAddress}&body=${encodedAddress}`;
+
+  // Open the default email client with the pre-filled email
+  window.location.href = mailToLink;
+
+  // TODO: Copy the formatted template to clipboard
+  /*
   // const innerText = element.innerText
   const innerHTML = element.innerHTML || ""; // fallback to empty string if element is null
 
@@ -18,7 +29,6 @@ const copyTextToClipboard = async () => {
   await navigator.clipboard.write(data);
   window.alert("Formatted text copied! Now just paste it in your email.");
 
-  /*
   const openEmail = () => {
   const body = `Line 1\nLine 2\n\nBest regards, Your App`;
   const encodedBody = encodeURIComponent(body);
@@ -27,16 +37,16 @@ const copyTextToClipboard = async () => {
    */
 };
 
-const CopyToClipboardButton = () => {
+const CopyTemplateButton = ({ address }: { address: string }) => {
   return (
     <button
       id="copyToClipboardButton"
       type="button"
-      onClick={copyTextToClipboard}
+      onClick={() => copyTemplateAndOpenMail(address)}
     >
-      Copy to Clipboard
+      Send
     </button>
   );
 };
 
-export default CopyToClipboardButton;
+export default CopyTemplateButton;
