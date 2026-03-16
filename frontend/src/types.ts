@@ -1,6 +1,6 @@
 export type TemplateProps = {
   address: string;
-  mlsNumber: string;
+  mlsNumber: string | null;
   bedrooms: number;
   fullBathrooms: number;
   halfBathrooms: number;

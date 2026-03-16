@@ -56,28 +56,47 @@ const Template = (props: TemplateProps) => {
         ? { color: "red", fontWeight: "bold", fontSize: "14px" }
         : { color: "black", fontWeight: "bold", fontSize: "14px" };
 
+  const noSpacing = { margin: 0, padding: 0, lineHeight: 1.2 };
+
   return (
     <div className="container" id="templateContainer">
-      <p>
-        {address} <br />
-        MLS #: <span style={mlsNumberStyle}>{mlsNumber}</span> <br />
-        Bedrooms: {bedrooms.toString()} <br />
-        Bathrooms: {fullBathrooms.toString()}|{halfBathrooms.toString()} <br />
-        Garage: {garage.toString()} <br />
+      <p style={noSpacing}>{address ? address : "Address not specified"}</p>
+
+      <p style={noSpacing}>
+        {mlsNumber && (
+          <>
+            MLS #: <span style={mlsNumberStyle}>{mlsNumber}</span>
+          </>
+        )}
+      </p>
+
+      <p style={noSpacing}>Bedrooms: {bedrooms.toString()}</p>
+      <p style={noSpacing}>
+        Bathrooms: {fullBathrooms.toString()}|{halfBathrooms.toString()}
+      </p>
+      <p style={noSpacing}>Garage: {garage.toString()}</p>
+      <p style={noSpacing}>
         Total SqFt: {numberWithCommas(sqft)} SqFt on {numberWithCommas(sqftLot)}{" "}
-        SqFt Lot <br />
+        SqFt Lot
+      </p>
+      <p style={noSpacing}>
         Listing Price: {USDollarExact.format(listingPrice)} (
-        {USDollar.format(pricePerSqft)}/SqFt) <br />
-        Age: {age} <br />
-        Status: {status} <br />
-        DOM: {dom} <br />
-        Listing Agent: {listingAgent} ({listingAgentOffice}) <br />
-        School District: {schoolDistrict} <br />
-        <br />
-        ARV: {USDollarExact.format(arv)} <br />
-        Max Acquisition Price: {USDollarExact.format(
-          maxAquisitionPrice,
-        )} -&gt;{" "}
+        {USDollar.format(pricePerSqft)}/SqFt)
+      </p>
+      <p style={noSpacing}>Age: {age}</p>
+      <p style={noSpacing}>Status: {status}</p>
+      <p style={noSpacing}>DOM: {dom}</p>
+      <p style={noSpacing}>
+        Listing Agent: {listingAgent} ({listingAgentOffice})
+      </p>
+      <p style={noSpacing}>School District: {schoolDistrict}</p>
+
+      <br />
+
+      <p style={noSpacing}>ARV: {USDollarExact.format(arv)}</p>
+
+      <p style={noSpacing}>
+        Max Acquisition Price: {USDollarExact.format(maxAquisitionPrice)} -&gt;{" "}
         <span style={acquisitionMarginStyle}>
           {USDollarExact.format(acquisitionMargin)}
         </span>

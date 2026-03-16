@@ -9,7 +9,7 @@ import type { TemplateProps } from "./types";
 const App = () => {
   const [form, setForm] = useState<TemplateProps>({
     address: "",
-    mlsNumber: "",
+    mlsNumber: null,
     bedrooms: 0,
     fullBathrooms: 0,
     halfBathrooms: 0,
