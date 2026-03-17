@@ -1,10 +1,19 @@
 import type { TemplateProps } from "../types";
-import { isValidURL, httpifyURL } from "../utils/string.utils";
 import {
   USDollar,
   USDollarExact,
   numberWithCommas,
 } from "../utils/number.utils";
+import { httpifyURL, isValidURL } from "../utils/string.utils";
+
+import {
+  acquisitionMarginStyle,
+  disclosuresLinkStyle,
+  mlsNumberStyle,
+  noSpacing,
+  openHouseTextStyle,
+  privateNotesStyle,
+} from "../styles";
 
 const Template = (props: TemplateProps) => {
   const {
@@ -33,30 +42,6 @@ const Template = (props: TemplateProps) => {
   const pricePerSqft = listingPrice / sqft;
   const maxAquisitionPrice = arv * 0.75;
   const acquisitionMargin = maxAquisitionPrice - listingPrice;
-
-  // shared style objects
-  const mlsNumberStyle = { fontWeight: "bold", fontSize: "14px" };
-  const disclosuresLinkStyle = {
-    color: "#0066cc",
-    textDecoration: "none",
-    fontSize: "13px",
-  };
-  const openHouseTextStyle = { whiteSpace: "pre-wrap", fontSize: "13px" };
-  const privateNotesStyle = {
-    color: "#993300",
-    fontFamily: "Verdana, sans-serif",
-    fontSize: "13px",
-  };
-
-  // choose inline styles based on acquisition margin sign
-  const acquisitionMarginStyle =
-    acquisitionMargin > 0
-      ? { color: "green", fontWeight: "bold", fontSize: "14px" }
-      : acquisitionMargin < 0
-        ? { color: "red", fontWeight: "bold", fontSize: "14px" }
-        : { color: "black", fontWeight: "bold", fontSize: "14px" };
-
-  const noSpacing = { margin: 0, padding: 0, lineHeight: 1.2 };
 
   return (
     <div className="container" id="templateContainer">
@@ -91,56 +76,57 @@ const Template = (props: TemplateProps) => {
       </p>
       <p style={noSpacing}>School District: {schoolDistrict}</p>
 
-      <br />
-
       <p style={noSpacing}>ARV: {USDollarExact.format(arv)}</p>
 
       <p style={noSpacing}>
         Max Acquisition Price: {USDollarExact.format(maxAquisitionPrice)} -&gt;{" "}
-        <span style={acquisitionMarginStyle}>
+        <span style={acquisitionMarginStyle(acquisitionMargin)}>
           {USDollarExact.format(acquisitionMargin)}
         </span>
-        <br />
-        <br />
+      </p>
+
+      <br />
+
+      <p style={noSpacing}>
         Disclosures:{" "}
         {disclosures ? (
           isValidURL(disclosures) ? (
-            <>
-              <a href={httpifyURL(disclosures)} style={disclosuresLinkStyle}>
-                {disclosures}
-              </a>
-              <br />
-            </>
+            <a href={httpifyURL(disclosures)} style={disclosuresLinkStyle}>
+              {disclosures}
+            </a>
           ) : (
             <span>{disclosures}</span>
           )
         ) : (
           "Not specified"
         )}
-        <br />
+      </p>
+
+      <br />
+
+      <p style={noSpacing}>
         OH: {openHouse ? null : "Not specified"}
         {openHouse ? (
-          <>
-            <br />
-            <span style={openHouseTextStyle}>
-              <pre style={openHouseTextStyle}>{openHouse}</pre>
-            </span>
-          </>
+          <span style={openHouseTextStyle}>
+            <pre style={openHouseTextStyle}>{openHouse}</pre>
+          </span>
         ) : null}
-        <br />
+      </p>
+
+      <br />
+
+      <p style={noSpacing}>
         Private Notes:{" "}
         {privateNotes ? (
-          <>
-            <br />
-            <span style={privateNotesStyle}>{privateNotes}</span>
-          </>
+          <span style={privateNotesStyle}>{privateNotes}</span>
         ) : (
           "Not specified"
         )}
-        <br />
-        <br />
-        MLS Comps attached:
       </p>
+
+      <br />
+
+      <p style={noSpacing}>MLS Comps attached:</p>
     </div>
   );
 };

@@ -5,6 +5,11 @@ import Template from "./components/Template";
 import FieldInput from "./components/FieldInput";
 import FieldTextarea from "./components/FieldTextarea";
 import type { TemplateProps } from "./types";
+import {
+  privateNotesStyle,
+  openHouseTextStyle,
+  disclosuresLinkStyle,
+} from "./styles";
 
 const App = () => {
   const [form, setForm] = useState<TemplateProps>({
@@ -207,6 +212,7 @@ const App = () => {
           <div className="row">
             <FieldTextarea
               label="Disclosures"
+              labelStyle={disclosuresLinkStyle}
               inputId="disclosuresInput"
               onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
                 handleFormChange("disclosures", event.target.value)
@@ -215,6 +221,7 @@ const App = () => {
 
             <FieldTextarea
               label="Open House"
+              labelStyle={openHouseTextStyle}
               inputId="openHouseInput"
               onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
                 handleFormChange("openHouse", event.target.value)
@@ -223,6 +230,7 @@ const App = () => {
 
             <FieldTextarea
               label="Private Notes"
+              labelStyle={privateNotesStyle}
               inputId="privateNotesInput"
               onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
                 handleFormChange("privateNotes", event.target.value)

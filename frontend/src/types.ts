@@ -30,6 +30,7 @@ export type FieldInputProps = {
 
 export type FieldTextareaProps = {
   label: string;
+  labelStyle?: React.CSSProperties;
   inputId: string;
   onChange: Function;
 };
