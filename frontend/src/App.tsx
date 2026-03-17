@@ -46,9 +46,40 @@ const App = () => {
 
   const templateRef = document.getElementById("templateContainer")!;
 
+  const [status, setStatus] = useState<"onMarket" | "offMarket">("onMarket");
+
   return (
     <>
       <h1>MLS</h1>
+
+      {/* on or off market toggle */}
+      <fieldset style={{ display: "flex" }}>
+        <legend>Status</legend>
+
+        <div>
+          <label htmlFor="onMarket">On Market</label>
+          <input
+            type="radio"
+            id="onMarket"
+            name="status"
+            value="onMarket"
+            checked={status === "onMarket"}
+            onChange={() => setStatus("onMarket")}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="offMarket">Off Market</label>
+          <input
+            type="radio"
+            id="offMarket"
+            name="status"
+            value="offMarket"
+            checked={status === "offMarket"}
+            onChange={() => setStatus("offMarket")}
+          />
+        </div>
+      </fieldset>
 
       <section>
         <h2>Fields</h2>
