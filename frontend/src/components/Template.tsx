@@ -76,6 +76,8 @@ const Template = (props: TemplateProps) => {
       </p>
       <p style={noSpacing}>School District: {schoolDistrict}</p>
 
+      <br />
+
       <p style={noSpacing}>ARV: {USDollarExact.format(arv)}</p>
 
       <p style={noSpacing}>
