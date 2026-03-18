@@ -2,9 +2,11 @@
 React + TypeScript + Vite
 
 ## features wishlist
-- Save form state on localStorage so that it persists on page refresh
-- Tab-separated text textarea parser
+- PRIORITY: Add functionality to on/off market toggle
+- PRIORITY: Make Status a select item
+- PRIORITY: Save form state on localStorage so that it persists on page refresh
 - Basic styling
+- Tab-separated text textarea parser
 
 # backend
 Python + Django + Ninja
