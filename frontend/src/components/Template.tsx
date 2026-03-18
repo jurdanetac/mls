@@ -90,19 +90,20 @@ const Template = (props: TemplateProps) => {
       <br />
 
       <p style={noSpacing}>
-        Disclosures:{" "}
-        {disclosures ? (
-          isValidURL(disclosures) ? (
+        Disclosures: {disclosures ? null : "Not specified"}
+      </p>
+
+      {disclosures ? (
+        <p style={noSpacing}>
+          {isValidURL(disclosures) ? (
             <a href={httpifyURL(disclosures)} style={disclosuresLinkStyle}>
               {disclosures}
             </a>
           ) : (
             <span>{disclosures}</span>
-          )
-        ) : (
-          "Not specified"
-        )}
-      </p>
+          )}
+        </p>
+      ) : null}
 
       <br />
 
@@ -118,13 +119,14 @@ const Template = (props: TemplateProps) => {
       <br />
 
       <p style={noSpacing}>
-        Private Notes:{" "}
-        {privateNotes ? (
-          <span style={privateNotesStyle}>{privateNotes}</span>
-        ) : (
-          "Not specified"
-        )}
+        Private Notes: {privateNotes ? null : "Not specified"}
       </p>
+
+      {privateNotes ? (
+        <p style={noSpacing}>
+          <span style={privateNotesStyle}>{privateNotes}</span>
+        </p>
+      ) : null}
 
       <br />
 
