@@ -275,7 +275,7 @@ const App = () => {
 
       <section>
         <h2>Template</h2>
-        <Template {...form} />
+        <Template form={form} />
         <CopyTemplateButton element={templateRef} />
       </section>
     </>

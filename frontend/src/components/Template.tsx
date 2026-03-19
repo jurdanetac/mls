@@ -15,70 +15,51 @@ import {
   privateNotesStyle,
 } from "../styles";
 
-const Template = (props: TemplateProps) => {
-  const {
-    address,
-    mlsNumber,
-    bedrooms,
-    fullBathrooms,
-    halfBathrooms,
-    garage,
-    sqft,
-    sqftLot,
-    listingPrice,
-    age,
-    status,
-    dom,
-    listingAgent,
-    listingAgentOffice,
-    schoolDistrict,
-    arv,
-    disclosures,
-    openHouse,
-    privateNotes,
-  } = props;
-
+const Template = ({ form }: { form: TemplateProps }) => {
   // Calculations
-  const pricePerSqft = listingPrice / sqft;
-  const maxAquisitionPrice = arv * 0.75;
-  const acquisitionMargin = maxAquisitionPrice - listingPrice;
+  const pricePerSqft = form.listingPrice / form.sqft;
+  const maxAquisitionPrice = form.arv * 0.75;
+  const acquisitionMargin = maxAquisitionPrice - form.listingPrice;
 
   return (
     <div className="container" id="templateContainer">
-      <p style={noSpacing}>{address ? address : "Address not specified"}</p>
+      <p style={noSpacing}>
+        {form.address ? form.address : "Address not specified"}
+      </p>
 
       <p style={noSpacing}>
-        {mlsNumber && (
+        {form.mlsNumber && (
           <>
-            MLS #: <span style={mlsNumberStyle}>{mlsNumber}</span>
+            MLS #: <span style={mlsNumberStyle}>{form.mlsNumber}</span>
           </>
         )}
       </p>
 
-      <p style={noSpacing}>Bedrooms: {bedrooms.toString()}</p>
+      <p style={noSpacing}>Bedrooms: {form.bedrooms.toString()}</p>
       <p style={noSpacing}>
-        Bathrooms: {fullBathrooms.toString()}|{halfBathrooms.toString()}
+        Bathrooms: {form.fullBathrooms.toString()}|
+        {form.halfBathrooms.toString()}
       </p>
-      <p style={noSpacing}>Garage: {garage.toString()}</p>
+      <p style={noSpacing}>Garage: {form.garage.toString()}</p>
       <p style={noSpacing}>
-        Total SqFt: {numberWithCommas(sqft)} SqFt on {numberWithCommas(sqftLot)}{" "}
-        SqFt Lot
+        Total SqFt: {numberWithCommas(form.sqft)} SqFt on{" "}
+        {numberWithCommas(form.sqftLot)} SqFt Lot
       </p>
       <p style={noSpacing}>
-        Listing Price: {USDollarExact.format(listingPrice)} (
+        Listing Price: {USDollarExact.format(form.listingPrice)} (
         {USDollar.format(pricePerSqft)}/SqFt)
       </p>
-      <p style={noSpacing}>Age: {age}</p>
-      <p style={noSpacing}>Status: {status}</p>
-      <p style={noSpacing}>DOM: {dom}</p>
+      <p style={noSpacing}>Age: {form.age}</p>
+      <p style={noSpacing}>Status: {form.status}</p>
+      <p style={noSpacing}>DOM: {form.dom}</p>
       <p style={noSpacing}>
-        Listing Agent: {listingAgent} ({listingAgentOffice})
+        Listing Agent: {form.listingAgent} ({form.listingAgentOffice})
       </p>
-      <p style={noSpacing}>School District: {schoolDistrict}</p>
+      <p style={noSpacing}>School District: {form.schoolDistrict}</p>
 
       <br />
 
-      <p style={noSpacing}>ARV: {USDollarExact.format(arv)}</p>
+      <p style={noSpacing}>ARV: {USDollarExact.format(form.arv)}</p>
 
       <p style={noSpacing}>
         Max Acquisition Price: {USDollarExact.format(maxAquisitionPrice)} -&gt;{" "}
@@ -90,17 +71,17 @@ const Template = (props: TemplateProps) => {
       <br />
 
       <p style={noSpacing}>
-        Disclosures: {disclosures ? null : "Not specified"}
+        Disclosures: {form.disclosures ? null : "Not specified"}
       </p>
 
-      {disclosures ? (
+      {form.disclosures ? (
         <p style={noSpacing}>
-          {isValidURL(disclosures) ? (
-            <a href={httpifyURL(disclosures)} style={disclosuresLinkStyle}>
-              {disclosures}
+          {isValidURL(form.disclosures) ? (
+            <a href={httpifyURL(form.disclosures)} style={disclosuresLinkStyle}>
+              {form.disclosures}
             </a>
           ) : (
-            <span>{disclosures}</span>
+            <span>{form.disclosures}</span>
           )}
         </p>
       ) : null}
@@ -108,10 +89,10 @@ const Template = (props: TemplateProps) => {
       <br />
 
       <p style={noSpacing}>
-        OH: {openHouse ? null : "Not specified"}
-        {openHouse ? (
+        OH: {form.openHouse ? null : "Not specified"}
+        {form.openHouse ? (
           <span style={openHouseTextStyle}>
-            <pre style={openHouseTextStyle}>{openHouse}</pre>
+            <pre style={openHouseTextStyle}>{form.openHouse}</pre>
           </span>
         ) : null}
       </p>
@@ -119,12 +100,12 @@ const Template = (props: TemplateProps) => {
       <br />
 
       <p style={noSpacing}>
-        Private Notes: {privateNotes ? null : "Not specified"}
+        Private Notes: {form.privateNotes ? null : "Not specified"}
       </p>
 
-      {privateNotes ? (
+      {form.privateNotes ? (
         <p style={noSpacing}>
-          <span style={privateNotesStyle}>{privateNotes}</span>
+          <span style={privateNotesStyle}>{form.privateNotes}</span>
         </p>
       ) : null}
 
