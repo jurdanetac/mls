@@ -7,7 +7,7 @@ React + TypeScript + Vite
 - PRIORITY: Save form state on localStorage so that it persists on page refresh
 - Basic styling
 - Tab-separated text textarea parser
-- GitHub Action deploy to pages to have a template-only app in case of no access to backend
+- ~~GitHub Action deploy to pages to have a template-only app in case of no access to backend~~
 
 # backend
 Python + Django + Ninja
