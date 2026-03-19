@@ -1,3 +1,15 @@
+// https://stackoverflow.com/a/79762129
+const Status = {
+  onMarket: "Active",
+  offMarket: "Off Market",
+  membersOnlyShow: "Members Only - Show",
+  membersOnlyDoNotShow: "Members Only - Do Not Show",
+} as const;
+
+type Status = (typeof Status)[keyof typeof Status];
+
+export { Status };
+
 export type TemplateProps = {
   address: string;
   mlsNumber: string | null;
@@ -9,7 +21,7 @@ export type TemplateProps = {
   sqftLot: number;
   listingPrice: number;
   age: number;
-  status: string;
+  status: Status;
   dom: number;
   listingAgent: string;
   listingAgentOffice: string;

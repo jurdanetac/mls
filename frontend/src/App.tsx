@@ -4,7 +4,7 @@ import CopyTemplateButton from "./components/CopyTemplateButton";
 import Template from "./components/Template";
 import FieldInput from "./components/FieldInput";
 import FieldTextarea from "./components/FieldTextarea";
-import type { TemplateProps } from "./types";
+import { Status, type TemplateProps } from "./types";
 import {
   privateNotesStyle,
   openHouseTextStyle,
@@ -23,7 +23,7 @@ const App = () => {
     sqftLot: 0,
     listingPrice: 0,
     age: 0,
-    status: "",
+    status: Status.onMarket,
     dom: 0,
     listingAgent: "",
     listingAgentOffice: "",
@@ -46,40 +46,24 @@ const App = () => {
 
   const templateRef = document.getElementById("templateContainer")!;
 
-  const [status, setStatus] = useState<"onMarket" | "offMarket">("onMarket");
-
   return (
     <>
       <h1>MLS</h1>
 
-      {/* on or off market toggle */}
-      <fieldset style={{ display: "flex" }}>
-        <legend>Status</legend>
-
-        <div>
-          <label htmlFor="onMarket">On Market</label>
-          <input
-            type="radio"
-            id="onMarket"
-            name="status"
-            value="onMarket"
-            checked={status === "onMarket"}
-            onChange={() => setStatus("onMarket")}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="offMarket">Off Market</label>
-          <input
-            type="radio"
-            id="offMarket"
-            name="status"
-            value="offMarket"
-            checked={status === "offMarket"}
-            onChange={() => setStatus("offMarket")}
-          />
-        </div>
-      </fieldset>
+      <select
+        name="status"
+        id="statusSelect"
+        onChange={(event) =>
+          handleFormChange("status", event.target.value as Status)
+        }
+      >
+        <option value={Status.onMarket}>Active</option>
+        <option value={Status.membersOnlyShow}>Members Only - Show</option>
+        <option value={Status.membersOnlyDoNotShow}>
+          Members Only - Do Not Show
+        </option>
+        <option value={Status.offMarket}>Off Market</option>
+      </select>
 
       <section>
         <h2>Fields</h2>
@@ -95,6 +79,7 @@ const App = () => {
               }}
             />
 
+            {/* MLS Number may not be specified for off market properties */}
             <FieldInput
               type="text"
               label="MLS #"
@@ -179,15 +164,6 @@ const App = () => {
               inputId="ageInput"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 handleFormChange("age", Number(event.target.value))
-              }
-            />
-
-            <FieldInput
-              type="text"
-              label="Status"
-              inputId="statusInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("status", event.target.value)
               }
             />
           </div>
