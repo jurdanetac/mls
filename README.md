@@ -4,10 +4,11 @@ React + TypeScript + Vite
 ## features wishlist
 - **PRIORITY**: Add functionality to on/off market toggle
 - **PRIORITY**: Create opportunity from the input values using the GHL form middleman
-- ~~**PRIORITY**: Make Status a select item~~
 - **PRIORITY**: Save form state on localStorage so that it persists on page refresh
-- Basic styling
+- Change form to be a React hook
 - Tab-separated text textarea parser
+- Basic styling
+- ~~**PRIORITY**: Make Status a select item~~
 - ~~GitHub Action deploy to pages to have a template-only app in case of no access to backend~~
 
 # backend
