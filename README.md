@@ -3,7 +3,7 @@ React + TypeScript + Vite
 
 ## features wishlist
 - **PRIORITY**: Add functionality to on/off market toggle
-- **PRIORITY**: Create opportunity from the input values using the GHL form middleman
+- **PRIORITY**: Send contact/opportunity creation request to GHL webhook
 - **PRIORITY**: Save form state on localStorage so that it persists on page refresh
 - Change form to be a React hook
 - Tab-separated text textarea parser
