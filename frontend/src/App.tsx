@@ -14,7 +14,7 @@ import {
 const App = () => {
   const [form, setForm] = useState<TemplateProps>({
     address: "",
-    mlsNumber: null,
+    mlsNumber: undefined,
     bedrooms: 0,
     fullBathrooms: 0,
     halfBathrooms: 0,
@@ -24,14 +24,14 @@ const App = () => {
     listingPrice: 0,
     age: 0,
     status: Status.onMarket,
-    dom: 0,
+    dom: undefined,
     listingAgent: "",
     listingAgentOffice: "",
     schoolDistrict: "",
     arv: 0,
-    disclosures: "",
-    openHouse: "",
-    privateNotes: "",
+    disclosures: undefined,
+    openHouse: undefined,
+    privateNotes: undefined,
   });
 
   const handleFormChange = <K extends keyof TemplateProps>(
@@ -80,14 +80,16 @@ const App = () => {
             />
 
             {/* MLS Number may not be specified for off market properties */}
-            <FieldInput
-              type="text"
-              label="MLS #"
-              inputId="mlsNumberInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                handleFormChange("mlsNumber", event.target.value);
-              }}
-            />
+            {form.status !== Status.offMarket && (
+              <FieldInput
+                type="text"
+                label="MLS #"
+                inputId="mlsNumberInput"
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  handleFormChange("mlsNumber", event.target.value);
+                }}
+              />
+            )}
           </div>
 
           <div className="row">
@@ -151,7 +153,11 @@ const App = () => {
           <div className="row">
             <FieldInput
               type="number"
-              label="Listing Price ($)"
+              label={
+                form.status === Status.offMarket
+                  ? "Asking Price ($)"
+                  : "Listing Price ($)"
+              }
               inputId="listingPriceInput"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 handleFormChange("listingPrice", Number(event.target.value))
@@ -169,14 +175,16 @@ const App = () => {
           </div>
 
           <div className="row">
-            <FieldInput
-              type="number"
-              label="DOM"
-              inputId="domInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("dom", Number(event.target.value))
-              }
-            />
+            {form.status === Status.onMarket && (
+              <FieldInput
+                type="number"
+                label="DOM"
+                inputId="domInput"
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  handleFormChange("dom", Number(event.target.value))
+                }
+              />
+            )}
 
             <FieldInput
               type="text"
@@ -216,34 +224,38 @@ const App = () => {
               }
             />
           </div>
-          <div className="row">
-            <FieldTextarea
-              label="Disclosures"
-              labelStyle={disclosuresLinkStyle}
-              inputId="disclosuresInput"
-              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-                handleFormChange("disclosures", event.target.value)
-              }
-            />
 
-            <FieldTextarea
-              label="Open House"
-              labelStyle={openHouseTextStyle}
-              inputId="openHouseInput"
-              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-                handleFormChange("openHouse", event.target.value)
-              }
-            />
+          {/* On market fields */}
+          {form.status !== Status.offMarket && (
+            <div className="row">
+              <FieldTextarea
+                label="Disclosures"
+                labelStyle={disclosuresLinkStyle}
+                inputId="disclosuresInput"
+                onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                  handleFormChange("disclosures", event.target.value)
+                }
+              />
 
-            <FieldTextarea
-              label="Private Notes"
-              labelStyle={privateNotesStyle}
-              inputId="privateNotesInput"
-              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-                handleFormChange("privateNotes", event.target.value)
-              }
-            />
-          </div>
+              <FieldTextarea
+                label="Open House"
+                labelStyle={openHouseTextStyle}
+                inputId="openHouseInput"
+                onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                  handleFormChange("openHouse", event.target.value)
+                }
+              />
+
+              <FieldTextarea
+                label="Private Notes"
+                labelStyle={privateNotesStyle}
+                inputId="privateNotesInput"
+                onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                  handleFormChange("privateNotes", event.target.value)
+                }
+              />
+            </div>
+          )}
         </div>
       </section>
 

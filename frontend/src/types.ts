@@ -11,8 +11,9 @@ type Status = (typeof Status)[keyof typeof Status];
 export { Status };
 
 export type TemplateProps = {
+  // required, most can be found in county records or on the MLS listing
+  status: Status;
   address: string;
-  mlsNumber: string | null;
   bedrooms: number;
   fullBathrooms: number;
   halfBathrooms: number;
@@ -21,15 +22,17 @@ export type TemplateProps = {
   sqftLot: number;
   listingPrice: number;
   age: number;
-  status: Status;
-  dom: number;
   listingAgent: string;
   listingAgentOffice: string;
   schoolDistrict: string;
   arv: number;
-  disclosures: string;
-  openHouse: string;
-  privateNotes: string;
+
+  // off market optionals
+  mlsNumber?: string;
+  dom?: number;
+  disclosures?: string;
+  openHouse?: string;
+  privateNotes?: string;
 };
 
 // TODO: improve prop types

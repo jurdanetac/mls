@@ -1,4 +1,5 @@
 import type { TemplateProps } from "../types";
+import { Status } from "../types";
 import {
   USDollar,
   USDollarExact,
@@ -46,12 +47,19 @@ const Template = ({ form }: { form: TemplateProps }) => {
         {numberWithCommas(form.sqftLot)} SqFt Lot
       </p>
       <p style={noSpacing}>
-        Listing Price: {USDollarExact.format(form.listingPrice)} (
+        {form.status === Status.offMarket
+          ? "Asking Price: "
+          : "Listing Price: "}
+        {USDollarExact.format(form.listingPrice)} (
         {USDollar.format(pricePerSqft)}/SqFt)
       </p>
       <p style={noSpacing}>Age: {form.age}</p>
       <p style={noSpacing}>Status: {form.status}</p>
-      <p style={noSpacing}>DOM: {form.dom}</p>
+
+      {form.status === Status.onMarket && (
+        <p style={noSpacing}>DOM: {form.dom}</p>
+      )}
+
       <p style={noSpacing}>
         Listing Agent: {form.listingAgent} ({form.listingAgentOffice})
       </p>
@@ -70,44 +78,64 @@ const Template = ({ form }: { form: TemplateProps }) => {
 
       <br />
 
-      <p style={noSpacing}>
-        Disclosures: {form.disclosures ? null : "Not specified"}
-      </p>
+      {form.status === Status.offMarket ? (
+        <p style={noSpacing}> Disclosures: N/A </p>
+      ) : (
+        <>
+          <p style={noSpacing}>
+            {" "}
+            Disclosures: {form.disclosures ? null : "Not specified"}{" "}
+          </p>
 
-      {form.disclosures ? (
-        <p style={noSpacing}>
-          {isValidURL(form.disclosures) ? (
-            <a href={httpifyURL(form.disclosures)} style={disclosuresLinkStyle}>
-              {form.disclosures}
-            </a>
-          ) : (
-            <span>{form.disclosures}</span>
-          )}
-        </p>
-      ) : null}
+          {form.disclosures ? (
+            <p style={noSpacing}>
+              {isValidURL(form.disclosures) ? (
+                <a
+                  href={httpifyURL(form.disclosures)}
+                  style={disclosuresLinkStyle}
+                >
+                  {form.disclosures}
+                </a>
+              ) : (
+                <span>{form.disclosures}</span>
+              )}
+            </p>
+          ) : null}
+        </>
+      )}
 
       <br />
 
-      <p style={noSpacing}>
-        OH: {form.openHouse ? null : "Not specified"}
-        {form.openHouse ? (
-          <span style={openHouseTextStyle}>
-            <pre style={openHouseTextStyle}>{form.openHouse}</pre>
-          </span>
-        ) : null}
-      </p>
+      {form.status === Status.offMarket ? (
+        <p style={noSpacing}> OH: N/A </p>
+      ) : (
+        <p style={noSpacing}>
+          OH: {form.openHouse ? null : "Not specified"}
+          {form.openHouse ? (
+            <span style={openHouseTextStyle}>
+              <pre style={openHouseTextStyle}>{form.openHouse}</pre>
+            </span>
+          ) : null}
+        </p>
+      )}
 
       <br />
 
-      <p style={noSpacing}>
-        Private Notes: {form.privateNotes ? null : "Not specified"}
-      </p>
+      {form.status === Status.offMarket ? (
+        <p style={noSpacing}> Private Notes: N/A </p>
+      ) : (
+        <>
+          <p style={noSpacing}>
+            Private Notes: {form.privateNotes ? null : "Not specified"}
+          </p>
 
-      {form.privateNotes ? (
-        <p style={noSpacing}>
-          <span style={privateNotesStyle}>{form.privateNotes}</span>
-        </p>
-      ) : null}
+          {form.privateNotes ? (
+            <p style={noSpacing}>
+              <span style={privateNotesStyle}>{form.privateNotes}</span>
+            </p>
+          ) : null}
+        </>
+      )}
 
       <br />
 
