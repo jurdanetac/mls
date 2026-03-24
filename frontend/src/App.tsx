@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import greenMCrossedUrl from "../assets/green-m-crossed.png";
 import greenMUrl from "../assets/green-m.png";
 import "./App.css";
 import CopyTemplateButton from "./components/CopyTemplateButton";
 import Template from "./components/Template";
+import formReducer, { initialState } from "./formReducer";
 import {
   disclosuresLinkStyle,
   flex,
@@ -13,36 +14,17 @@ import {
 import { Status, type TemplateProps } from "./types";
 
 const App = () => {
-  const [form, setForm] = useState<TemplateProps>({
-    address: "",
-    mlsNumber: undefined,
-    bedrooms: 0,
-    fullBathrooms: 0,
-    halfBathrooms: 0,
-    garage: 0,
-    sqft: 0,
-    sqftLot: 0,
-    listingPrice: 0,
-    age: 0,
-    status: Status.onMarket,
-    dom: undefined,
-    listingAgent: "",
-    listingAgentOffice: "",
-    schoolDistrict: "",
-    arv: 0,
-    disclosures: undefined,
-    openHouse: undefined,
-    privateNotes: undefined,
-  });
+  const [form, dispatch] = useReducer(formReducer, initialState);
 
   const handleFormChange = <K extends keyof TemplateProps>(
-    key: K,
+    field: K,
     value: TemplateProps[K],
   ) => {
-    setForm((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+    dispatch({
+      type: "FORM_CHANGED",
+      field: field,
+      value: value,
+    });
   };
 
   const templateRef = document.getElementById("templateContainer")!;
@@ -54,6 +36,7 @@ const App = () => {
         <select
           name="status"
           id="statusSelect"
+          value={form.status}
           onChange={(event) =>
             handleFormChange("status", event.target.value as Status)
           }
@@ -93,6 +76,7 @@ const App = () => {
               <input
                 type="text"
                 id="addressInput"
+                value={form.address}
                 onChange={(e) => handleFormChange("address", e.target.value)}
               />
             </div>
@@ -103,6 +87,7 @@ const App = () => {
                 <input
                   type="text"
                   id="mlsNumberInput"
+                  value={form.mlsNumber}
                   onChange={(e) =>
                     handleFormChange("mlsNumber", e.target.value)
                   }
@@ -117,6 +102,7 @@ const App = () => {
               <input
                 type="number"
                 id="bedroomsInput"
+                value={form.bedrooms}
                 onChange={(e) =>
                   handleFormChange("bedrooms", Number(e.target.value))
                 }
@@ -128,6 +114,7 @@ const App = () => {
               <input
                 type="number"
                 id="fullBathroomsInput"
+                value={form.fullBathrooms}
                 onChange={(e) =>
                   handleFormChange("fullBathrooms", Number(e.target.value))
                 }
@@ -139,6 +126,7 @@ const App = () => {
               <input
                 type="number"
                 id="halfBathroomsInput"
+                value={form.halfBathrooms}
                 onChange={(e) =>
                   handleFormChange("halfBathrooms", Number(e.target.value))
                 }
@@ -152,6 +140,7 @@ const App = () => {
               <input
                 type="number"
                 id="garageInput"
+                value={form.garage}
                 onChange={(e) =>
                   handleFormChange("garage", Number(e.target.value))
                 }
@@ -163,6 +152,7 @@ const App = () => {
               <input
                 type="number"
                 id="sqftInput"
+                value={form.sqft}
                 onChange={(e) =>
                   handleFormChange("sqft", Number(e.target.value))
                 }
@@ -174,6 +164,7 @@ const App = () => {
               <input
                 type="number"
                 id="sqftLotInput"
+                value={form.sqftLot}
                 onChange={(e) =>
                   handleFormChange("sqftLot", Number(e.target.value))
                 }
@@ -191,6 +182,7 @@ const App = () => {
               <input
                 type="number"
                 id="listingPriceInput"
+                value={form.listingPrice}
                 onChange={(e) =>
                   handleFormChange("listingPrice", Number(e.target.value))
                 }
@@ -202,6 +194,7 @@ const App = () => {
               <input
                 type="number"
                 id="ageInput"
+                value={form.age}
                 onChange={(e) =>
                   handleFormChange("age", Number(e.target.value))
                 }
@@ -216,6 +209,7 @@ const App = () => {
                 <input
                   type="number"
                   id="domInput"
+                  value={form.dom}
                   onChange={(e) =>
                     handleFormChange("dom", Number(e.target.value))
                   }
@@ -228,6 +222,7 @@ const App = () => {
               <input
                 type="text"
                 id="listingAgentInput"
+                value={form.listingAgent}
                 onChange={(e) =>
                   handleFormChange("listingAgent", e.target.value)
                 }
@@ -241,6 +236,7 @@ const App = () => {
               <input
                 type="text"
                 id="listingAgentOfficeInput"
+                value={form.listingAgentOffice}
                 onChange={(e) =>
                   handleFormChange("listingAgentOffice", e.target.value)
                 }
@@ -254,6 +250,7 @@ const App = () => {
               <input
                 type="text"
                 id="schoolDistrictInput"
+                value={form.schoolDistrict}
                 onChange={(e) =>
                   handleFormChange("schoolDistrict", e.target.value)
                 }
@@ -265,6 +262,7 @@ const App = () => {
               <input
                 type="number"
                 id="arvInput"
+                value={form.arv}
                 onChange={(e) =>
                   handleFormChange("arv", Number(e.target.value))
                 }
@@ -280,6 +278,7 @@ const App = () => {
                 </label>
                 <textarea
                   id="disclosuresInput"
+                  value={form.disclosures}
                   onChange={(e) =>
                     handleFormChange("disclosures", e.target.value)
                   }
@@ -292,6 +291,7 @@ const App = () => {
                 </label>
                 <textarea
                   id="openHouseInput"
+                  value={form.openHouse}
                   onChange={(e) =>
                     handleFormChange("openHouse", e.target.value)
                   }
@@ -304,6 +304,7 @@ const App = () => {
                 </label>
                 <textarea
                   id="privateNotesInput"
+                  value={form.privateNotes}
                   onChange={(e) =>
                     handleFormChange("privateNotes", e.target.value)
                   }
