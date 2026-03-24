@@ -109,14 +109,14 @@ const Template = ({ form }: { form: TemplateProps }) => {
       {form.status === Status.offMarket ? (
         <p style={noSpacing}> OH: N/A </p>
       ) : (
-        <p style={noSpacing}>
-          OH: {form.openHouse ? null : "Not specified"}
+        <>
+          <p style={noSpacing}>OH: {form.openHouse ? null : "Not specified"}</p>
           {form.openHouse ? (
             <span style={openHouseTextStyle}>
               <pre style={openHouseTextStyle}>{form.openHouse}</pre>
             </span>
           ) : null}
-        </p>
+        </>
       )}
 
       <br />

@@ -28,6 +28,12 @@ const App = () => {
     });
   };
 
+  const handleFormReset = () => {
+    dispatch({
+      type: "FORM_RESET",
+    });
+  };
+
   const templateRef = document.getElementById("templateContainer")!;
 
   // load previous form if any
@@ -44,7 +50,8 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    // update local storage
+    console.log("form changed")
+    // update local storage upon form change
     localStorage.setItem("form", JSON.stringify(form));
   }, [form]);
 
@@ -335,6 +342,10 @@ const App = () => {
       </section>
 
       <hr />
+
+      <button type="button" onClick={handleFormReset}>
+        Reset
+      </button>
 
       <section>
         <h2>Template</h2>
