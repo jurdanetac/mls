@@ -27,8 +27,11 @@ export default function formReducer(
   action: FormAction,
 ): TemplateProps {
   switch (action.type) {
+    case "FORM_SET": {
+      return action.form;
+    }
+
     case "FORM_CHANGED": {
-      // The reducer handles the "spread" so your component doesn't have to
       return {
         ...state,
         [action.field]: action.value,
@@ -41,6 +44,7 @@ export default function formReducer(
 
     default: {
       // This ensures at compile time that all action types were handled
+      // @ts-ignore
       const _exhaustiveCheck: never = action;
       return state;
     }

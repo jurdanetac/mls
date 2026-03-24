@@ -38,4 +38,5 @@ export type TemplateProps = {
 // Define a strict type for your actions
 export type FormAction =
   | { type: "FORM_RESET" }
+  | { type: "FORM_SET"; form: TemplateProps }
   | { type: "FORM_CHANGED"; field: keyof TemplateProps; value: any };

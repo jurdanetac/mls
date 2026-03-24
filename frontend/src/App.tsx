@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import greenMCrossedUrl from "../assets/green-m-crossed.png";
 import greenMUrl from "../assets/green-m.png";
 import "./App.css";
@@ -20,6 +20,7 @@ const App = () => {
     field: K,
     value: TemplateProps[K],
   ) => {
+    // update state
     dispatch({
       type: "FORM_CHANGED",
       field: field,
@@ -28,6 +29,24 @@ const App = () => {
   };
 
   const templateRef = document.getElementById("templateContainer")!;
+
+  // load previous form if any
+  useEffect(() => {
+    const savedForm = localStorage.getItem("form") || "";
+
+    if (savedForm) {
+      // parse the form from string to appropiate type
+      const parsedSavedForm: TemplateProps = JSON.parse(savedForm);
+
+      // set it to the state
+      dispatch({ type: "FORM_SET", form: parsedSavedForm });
+    }
+  }, []);
+
+  useEffect(() => {
+    // update local storage
+    localStorage.setItem("form", JSON.stringify(form));
+  }, [form]);
 
   return (
     <>
