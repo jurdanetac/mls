@@ -30,3 +30,5 @@ export const acquisitionMarginStyle = (acquisitionMargin: number) => {
 };
 
 export const noSpacing = { margin: 0, padding: 0, lineHeight: 1.2 };
+
+export const flex = { display: "flex" };

@@ -1,15 +1,18 @@
 import { useState } from "react";
+import greenMCrossedUrl from "../assets/green-m-crossed.png";
+import greenMUrl from "../assets/green-m.png";
 import "./App.css";
 import CopyTemplateButton from "./components/CopyTemplateButton";
-import Template from "./components/Template";
 import FieldInput from "./components/FieldInput";
 import FieldTextarea from "./components/FieldTextarea";
-import { Status, type TemplateProps } from "./types";
+import Template from "./components/Template";
 import {
-  privateNotesStyle,
-  openHouseTextStyle,
   disclosuresLinkStyle,
+  flex,
+  openHouseTextStyle,
+  privateNotesStyle,
 } from "./styles";
+import { Status, type TemplateProps } from "./types";
 
 const App = () => {
   const [form, setForm] = useState<TemplateProps>({
@@ -49,21 +52,38 @@ const App = () => {
   return (
     <>
       <h1>MLS</h1>
+      <div style={{ ...flex, gap: "8px", alignItems: "center" }}>
+        <select
+          name="status"
+          id="statusSelect"
+          onChange={(event) =>
+            handleFormChange("status", event.target.value as Status)
+          }
+        >
+          <option value={Status.onMarket}>Active</option>
+          <option value={Status.membersOnlyShow}>Members Only - Show</option>
+          <option value={Status.membersOnlyDoNotShow}>
+            Members Only - Do Not Show
+          </option>
+          <option value={Status.offMarket}>Off Market</option>
+        </select>
 
-      <select
-        name="status"
-        id="statusSelect"
-        onChange={(event) =>
-          handleFormChange("status", event.target.value as Status)
-        }
-      >
-        <option value={Status.onMarket}>Active</option>
-        <option value={Status.membersOnlyShow}>Members Only - Show</option>
-        <option value={Status.membersOnlyDoNotShow}>
-          Members Only - Do Not Show
-        </option>
-        <option value={Status.offMarket}>Off Market</option>
-      </select>
+        {form.status.startsWith("Members") && (
+          <div>
+            <img
+              id="statusIcon"
+              width="16px"
+              height="16px"
+              alt="Status Icon"
+              src={
+                form.status === Status.membersOnlyShow
+                  ? greenMUrl
+                  : greenMCrossedUrl
+              }
+            />
+          </div>
+        )}
+      </div>
 
       <section>
         <h2>Fields</h2>
