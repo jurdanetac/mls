@@ -50,7 +50,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log("form changed")
+    console.log("form changed");
     // update local storage upon form change
     localStorage.setItem("form", JSON.stringify(form));
   }, [form]);
