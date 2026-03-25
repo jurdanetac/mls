@@ -113,7 +113,7 @@ const App = () => {
                 <input
                   type="text"
                   id="mlsNumberInput"
-                  value={form.mlsNumber}
+                  value={form.mlsNumber || ""}
                   onChange={(e) =>
                     handleFormChange("mlsNumber", e.target.value)
                   }
