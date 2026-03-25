@@ -304,7 +304,7 @@ const App = () => {
                 </label>
                 <textarea
                   id="disclosuresInput"
-                  value={form.disclosures}
+                  value={form.disclosures || ""}
                   onChange={(e) =>
                     handleFormChange("disclosures", e.target.value)
                   }
@@ -317,7 +317,7 @@ const App = () => {
                 </label>
                 <textarea
                   id="openHouseInput"
-                  value={form.openHouse}
+                  value={form.openHouse || ""}
                   onChange={(e) =>
                     handleFormChange("openHouse", e.target.value)
                   }
@@ -330,7 +330,7 @@ const App = () => {
                 </label>
                 <textarea
                   id="privateNotesInput"
-                  value={form.privateNotes}
+                  value={form.privateNotes || ""}
                   onChange={(e) =>
                     handleFormChange("privateNotes", e.target.value)
                   }
