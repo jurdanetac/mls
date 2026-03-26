@@ -15,6 +15,13 @@ export const httpifyURL = (url: string): string => {
   throw new Error("Invalid URL");
 };
 
+export const formatLabel = (str: string): string => {
+  return str
+    .split("_")
+    .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+    .join(" ");
+};
+
 // Note it won't catch URLs without protocol, so one must ensure to include it
 // Source: https://stackoverflow.com/a/5717133
 /*

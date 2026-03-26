@@ -1,11 +1,11 @@
 import type { TemplateProps } from "../types";
-import { Status } from "../types";
+import { Status, getLabelForStatus } from "../types";
 import {
   USDollar,
   USDollarExact,
   numberWithCommas,
 } from "../utils/number.utils";
-import { httpifyURL, isValidURL } from "../utils/string.utils";
+import { formatLabel, httpifyURL, isValidURL } from "../utils/string.utils";
 
 import {
   acquisitionMarginStyle,
@@ -53,16 +53,18 @@ const Template = ({ form }: { form: TemplateProps }) => {
           {numberWithCommas(form.sqftLot)} SqFt Lot
         </p>
         <p style={noSpacing}>
-          {form.status === Status.offMarket
+          {form.status === Status.OFF_MARKET
             ? "Asking Price: "
             : "Listing Price: "}
           {USDollarExact.format(form.listingPrice)} (
           {USDollar.format(pricePerSqft)}/SqFt)
         </p>
         <p style={noSpacing}>Age: {form.age}</p>
-        <p style={noSpacing}>Status: {form.status}</p>
+        <p style={noSpacing}>
+          Status: {formatLabel(getLabelForStatus(form.status))}
+        </p>
 
-        {form.status === Status.onMarket && (
+        {form.status === Status.ACTIVE && (
           <p style={noSpacing}>DOM: {form.dom}</p>
         )}
 
@@ -85,7 +87,7 @@ const Template = ({ form }: { form: TemplateProps }) => {
 
         <br />
 
-        {form.status === Status.offMarket ? (
+        {form.status === Status.OFF_MARKET ? (
           <p style={noSpacing}> Disclosures: N/A </p>
         ) : (
           <>
@@ -113,7 +115,7 @@ const Template = ({ form }: { form: TemplateProps }) => {
 
         <br />
 
-        {form.status === Status.offMarket ? (
+        {form.status === Status.OFF_MARKET ? (
           <p style={noSpacing}> OH: N/A </p>
         ) : (
           <>
@@ -130,7 +132,7 @@ const Template = ({ form }: { form: TemplateProps }) => {
 
         <br />
 
-        {form.status === Status.offMarket ? (
+        {form.status === Status.OFF_MARKET ? (
           <p style={noSpacing}> Private Notes: N/A </p>
         ) : (
           <>

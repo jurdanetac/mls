@@ -11,7 +11,7 @@ export const initialState: TemplateProps = {
   sqftLot: 0,
   listingPrice: 0,
   age: 0,
-  status: Status.onMarket,
+  status: Status.ACTIVE,
   dom: undefined,
   listingAgent: "",
   listingAgentOffice: "",

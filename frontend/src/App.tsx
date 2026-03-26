@@ -12,6 +12,7 @@ import {
   privateNotesStyle,
 } from "./styles";
 import { Status, type TemplateProps } from "./types";
+import { formatLabel } from "./utils/string.utils";
 
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
@@ -67,29 +68,29 @@ const App = () => {
             handleFormChange("status", event.target.value as Status)
           }
         >
-          <option value={Status.onMarket}>Active</option>
-          <option value={Status.membersOnlyShow}>Members Only - Show</option>
-          <option value={Status.membersOnlyDoNotShow}>
-            Members Only - Do Not Show
-          </option>
-          <option value={Status.offMarket}>Off Market</option>
+          {Object.entries(Status).map(([key, value]) => (
+            <option key={value} value={value}>
+              {formatLabel(key)}
+            </option>
+          ))}
         </select>
 
-        {form.status.startsWith("Members") && (
-          <div>
+        <div>
+          {(form.status === Status.MEMBERS_ONLY_SHOW ||
+            form.status === Status.MEMBERS_ONLY_DO_NOT_SHOW) && (
             <img
               id="statusIcon"
               width="16px"
               height="16px"
               alt="Status Icon"
               src={
-                form.status === Status.membersOnlyShow
+                form.status === Status.MEMBERS_ONLY_SHOW
                   ? greenMUrl
                   : greenMCrossedUrl
               }
             />
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <section>
@@ -107,7 +108,7 @@ const App = () => {
               />
             </div>
 
-            {form.status !== Status.offMarket && (
+            {form.status !== Status.OFF_MARKET && (
               <div>
                 <label htmlFor="mlsNumberInput">MLS #</label>
                 <input
@@ -201,7 +202,7 @@ const App = () => {
           <div className="row">
             <div>
               <label htmlFor="listingPriceInput">
-                {form.status === Status.offMarket
+                {form.status === Status.OFF_MARKET
                   ? "Asking Price ($)"
                   : "Listing Price ($)"}
               </label>
@@ -229,7 +230,7 @@ const App = () => {
           </div>
 
           <div className="row">
-            {form.status === Status.onMarket && (
+            {form.status === Status.ACTIVE && (
               <div>
                 <label htmlFor="domInput">DOM</label>
                 <input
@@ -296,7 +297,7 @@ const App = () => {
             </div>
           </div>
 
-          {form.status !== Status.offMarket && (
+          {form.status !== Status.OFF_MARKET && (
             <div className="row">
               <div>
                 <label htmlFor="disclosuresInput" style={disclosuresLinkStyle}>

@@ -1,14 +1,20 @@
 // https://stackoverflow.com/a/79762129
 const Status = {
-  onMarket: "Active",
-  offMarket: "Off Market",
-  membersOnlyShow: "Members Only - Show",
-  membersOnlyDoNotShow: "Members Only - Do Not Show",
+  ACTIVE: "active",
+  OFF_MARKET: "off",
+  MEMBERS_ONLY_SHOW: "show",
+  MEMBERS_ONLY_DO_NOT_SHOW: "donotshow",
 } as const;
 
 type Status = (typeof Status)[keyof typeof Status];
 
 export { Status };
+
+export const getLabelForStatus = (status: string) => {
+  return Object.entries(Status).find(([_, value]) => {
+    return value === status;
+  })![0];
+};
 
 export type TemplateProps = {
   // required, most can be found in county records or on the MLS listing
