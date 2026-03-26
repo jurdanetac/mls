@@ -19,12 +19,18 @@ from django.contrib import admin
 from django.urls import path
 from ninja import NinjaAPI
 
+from models.models import Template
+
+from .types import TemplateProps
+
 api = NinjaAPI()
 
 
-@api.get("/add")
-def add(request, a: int, b: int):
-    return {"result": a + b}
+@api.post("/templates")
+def templates(request, template: TemplateProps):
+    print(template)
+
+    return {"status": 200}
 
 
 urlpatterns = [
