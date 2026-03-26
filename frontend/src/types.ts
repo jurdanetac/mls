@@ -35,17 +35,8 @@ export type TemplateProps = {
   privateNotes?: string;
 };
 
-// TODO: improve prop types
-export type FieldInputProps = {
-  type: string;
-  label: string;
-  inputId: string;
-  onChange: Function;
-};
-
-export type FieldTextareaProps = {
-  label: string;
-  labelStyle?: React.CSSProperties;
-  inputId: string;
-  onChange: Function;
-};
+// Define a strict type for your actions
+export type FormAction =
+  | { type: "FORM_RESET" }
+  | { type: "FORM_SET"; form: TemplateProps }
+  | { type: "FORM_CHANGED"; field: keyof TemplateProps; value: any };

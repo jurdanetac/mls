@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useEffect, useReducer } from "react";
 import greenMCrossedUrl from "../assets/green-m-crossed.png";
 import greenMUrl from "../assets/green-m.png";
 import "./App.css";
 import CopyTemplateButton from "./components/CopyTemplateButton";
-import FieldInput from "./components/FieldInput";
-import FieldTextarea from "./components/FieldTextarea";
 import Template from "./components/Template";
+import formReducer, { initialState } from "./formReducer";
 import {
   disclosuresLinkStyle,
   flex,
@@ -15,39 +14,46 @@ import {
 import { Status, type TemplateProps } from "./types";
 
 const App = () => {
-  const [form, setForm] = useState<TemplateProps>({
-    address: "",
-    mlsNumber: undefined,
-    bedrooms: 0,
-    fullBathrooms: 0,
-    halfBathrooms: 0,
-    garage: 0,
-    sqft: 0,
-    sqftLot: 0,
-    listingPrice: 0,
-    age: 0,
-    status: Status.onMarket,
-    dom: undefined,
-    listingAgent: "",
-    listingAgentOffice: "",
-    schoolDistrict: "",
-    arv: 0,
-    disclosures: undefined,
-    openHouse: undefined,
-    privateNotes: undefined,
-  });
+  const [form, dispatch] = useReducer(formReducer, initialState);
 
   const handleFormChange = <K extends keyof TemplateProps>(
-    key: K,
+    field: K,
     value: TemplateProps[K],
   ) => {
-    setForm((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+    // update state
+    dispatch({
+      type: "FORM_CHANGED",
+      field: field,
+      value: value,
+    });
+  };
+
+  const handleFormReset = () => {
+    dispatch({
+      type: "FORM_RESET",
+    });
   };
 
   const templateRef = document.getElementById("templateContainer")!;
+
+  // load previous form if any
+  useEffect(() => {
+    const savedForm = localStorage.getItem("form") || "";
+
+    if (savedForm) {
+      // parse the form from string to appropiate type
+      const parsedSavedForm: TemplateProps = JSON.parse(savedForm);
+
+      // set it to the state
+      dispatch({ type: "FORM_SET", form: parsedSavedForm });
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("form changed");
+    // update local storage upon form change
+    localStorage.setItem("form", JSON.stringify(form));
+  }, [form]);
 
   return (
     <>
@@ -56,6 +62,7 @@ const App = () => {
         <select
           name="status"
           id="statusSelect"
+          value={form.status}
           onChange={(event) =>
             handleFormChange("status", event.target.value as Status)
           }
@@ -90,196 +97,255 @@ const App = () => {
 
         <div className="container" id="fieldsContainer">
           <div className="row">
-            <FieldInput
-              type="text"
-              label="Address"
-              inputId="addressInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                handleFormChange("address", event.target.value);
-              }}
-            />
-
-            {/* MLS Number may not be specified for off market properties */}
-            {form.status !== Status.offMarket && (
-              <FieldInput
+            <div>
+              <label htmlFor="addressInput">Address</label>
+              <input
                 type="text"
-                label="MLS #"
-                inputId="mlsNumberInput"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  handleFormChange("mlsNumber", event.target.value);
-                }}
+                id="addressInput"
+                value={form.address}
+                onChange={(e) => handleFormChange("address", e.target.value)}
               />
+            </div>
+
+            {form.status !== Status.offMarket && (
+              <div>
+                <label htmlFor="mlsNumberInput">MLS #</label>
+                <input
+                  type="text"
+                  id="mlsNumberInput"
+                  value={form.mlsNumber || ""}
+                  onChange={(e) =>
+                    handleFormChange("mlsNumber", e.target.value)
+                  }
+                />
+              </div>
             )}
           </div>
 
           <div className="row">
-            <FieldInput
-              type="number"
-              label="Bedrooms"
-              inputId="bedroomsInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("bedrooms", Number(event.target.value))
-              }
-            />
+            <div>
+              <label htmlFor="bedroomsInput">Bedrooms</label>
+              <input
+                type="number"
+                id="bedroomsInput"
+                value={form.bedrooms}
+                onChange={(e) =>
+                  handleFormChange("bedrooms", Number(e.target.value))
+                }
+              />
+            </div>
 
-            <FieldInput
-              type="number"
-              label="Full Bathrooms"
-              inputId="fullBahtroomsInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("fullBathrooms", Number(event.target.value))
-              }
-            />
+            <div>
+              <label htmlFor="fullBathroomsInput">Full Bathrooms</label>
+              <input
+                type="number"
+                id="fullBathroomsInput"
+                value={form.fullBathrooms}
+                onChange={(e) =>
+                  handleFormChange("fullBathrooms", Number(e.target.value))
+                }
+              />
+            </div>
 
-            <FieldInput
-              type="number"
-              label="Half Bathrooms"
-              inputId="halfBathroomsInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("halfBathrooms", Number(event.target.value))
-              }
-            />
+            <div>
+              <label htmlFor="halfBathroomsInput">Half Bathrooms</label>
+              <input
+                type="number"
+                id="halfBathroomsInput"
+                value={form.halfBathrooms}
+                onChange={(e) =>
+                  handleFormChange("halfBathrooms", Number(e.target.value))
+                }
+              />
+            </div>
           </div>
 
           <div className="row">
-            <FieldInput
-              type="number"
-              label="Garage"
-              inputId="garageInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("garage", Number(event.target.value))
-              }
-            />
+            <div>
+              <label htmlFor="garageInput">Garage</label>
+              <input
+                type="number"
+                id="garageInput"
+                value={form.garage}
+                onChange={(e) =>
+                  handleFormChange("garage", Number(e.target.value))
+                }
+              />
+            </div>
 
-            <FieldInput
-              type="number"
-              label="SqFt"
-              inputId="sqftInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("sqft", Number(event.target.value))
-              }
-            />
+            <div>
+              <label htmlFor="sqftInput">SqFt</label>
+              <input
+                type="number"
+                id="sqftInput"
+                value={form.sqft}
+                onChange={(e) =>
+                  handleFormChange("sqft", Number(e.target.value))
+                }
+              />
+            </div>
 
-            <FieldInput
-              type="number"
-              label="SqFt Lot"
-              inputId="sqftLotInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("sqftLot", Number(event.target.value))
-              }
-            />
+            <div>
+              <label htmlFor="sqftLotInput">SqFt Lot</label>
+              <input
+                type="number"
+                id="sqftLotInput"
+                value={form.sqftLot}
+                onChange={(e) =>
+                  handleFormChange("sqftLot", Number(e.target.value))
+                }
+              />
+            </div>
           </div>
 
           <div className="row">
-            <FieldInput
-              type="number"
-              label={
-                form.status === Status.offMarket
+            <div>
+              <label htmlFor="listingPriceInput">
+                {form.status === Status.offMarket
                   ? "Asking Price ($)"
-                  : "Listing Price ($)"
-              }
-              inputId="listingPriceInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("listingPrice", Number(event.target.value))
-              }
-            />
+                  : "Listing Price ($)"}
+              </label>
+              <input
+                type="number"
+                id="listingPriceInput"
+                value={form.listingPrice}
+                onChange={(e) =>
+                  handleFormChange("listingPrice", Number(e.target.value))
+                }
+              />
+            </div>
 
-            <FieldInput
-              type="number"
-              label="Age"
-              inputId="ageInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("age", Number(event.target.value))
-              }
-            />
+            <div>
+              <label htmlFor="ageInput">Age</label>
+              <input
+                type="number"
+                id="ageInput"
+                value={form.age}
+                onChange={(e) =>
+                  handleFormChange("age", Number(e.target.value))
+                }
+              />
+            </div>
           </div>
 
           <div className="row">
             {form.status === Status.onMarket && (
-              <FieldInput
-                type="number"
-                label="DOM"
-                inputId="domInput"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  handleFormChange("dom", Number(event.target.value))
-                }
-              />
+              <div>
+                <label htmlFor="domInput">DOM</label>
+                <input
+                  type="number"
+                  id="domInput"
+                  value={form.dom}
+                  onChange={(e) =>
+                    handleFormChange("dom", Number(e.target.value))
+                  }
+                />
+              </div>
             )}
 
-            <FieldInput
-              type="text"
-              label="Listing Agent"
-              inputId="listingAgentInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("listingAgent", event.target.value)
-              }
-            />
+            <div>
+              <label htmlFor="listingAgentInput">Listing Agent</label>
+              <input
+                type="text"
+                id="listingAgentInput"
+                value={form.listingAgent}
+                onChange={(e) =>
+                  handleFormChange("listingAgent", e.target.value)
+                }
+              />
+            </div>
 
-            <FieldInput
-              type="text"
-              label="Listing Agent Office"
-              inputId="listingAgentOfficeInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("listingAgentOffice", event.target.value)
-              }
-            />
+            <div>
+              <label htmlFor="listingAgentOfficeInput">
+                Listing Agent Office
+              </label>
+              <input
+                type="text"
+                id="listingAgentOfficeInput"
+                value={form.listingAgentOffice}
+                onChange={(e) =>
+                  handleFormChange("listingAgentOffice", e.target.value)
+                }
+              />
+            </div>
           </div>
 
           <div className="row">
-            <FieldInput
-              type="text"
-              label="School District"
-              inputId="schoolDistrictInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("schoolDistrict", event.target.value)
-              }
-            />
+            <div>
+              <label htmlFor="schoolDistrictInput">School District</label>
+              <input
+                type="text"
+                id="schoolDistrictInput"
+                value={form.schoolDistrict}
+                onChange={(e) =>
+                  handleFormChange("schoolDistrict", e.target.value)
+                }
+              />
+            </div>
 
-            <FieldInput
-              type="number"
-              label="ARV ($)"
-              inputId="arvInput"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                handleFormChange("arv", Number(event.target.value))
-              }
-            />
+            <div>
+              <label htmlFor="arvInput">ARV ($)</label>
+              <input
+                type="number"
+                id="arvInput"
+                value={form.arv}
+                onChange={(e) =>
+                  handleFormChange("arv", Number(e.target.value))
+                }
+              />
+            </div>
           </div>
 
-          {/* On market fields */}
           {form.status !== Status.offMarket && (
             <div className="row">
-              <FieldTextarea
-                label="Disclosures"
-                labelStyle={disclosuresLinkStyle}
-                inputId="disclosuresInput"
-                onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-                  handleFormChange("disclosures", event.target.value)
-                }
-              />
+              <div>
+                <label htmlFor="disclosuresInput" style={disclosuresLinkStyle}>
+                  Disclosures
+                </label>
+                <textarea
+                  id="disclosuresInput"
+                  value={form.disclosures || ""}
+                  onChange={(e) =>
+                    handleFormChange("disclosures", e.target.value)
+                  }
+                />
+              </div>
 
-              <FieldTextarea
-                label="Open House"
-                labelStyle={openHouseTextStyle}
-                inputId="openHouseInput"
-                onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-                  handleFormChange("openHouse", event.target.value)
-                }
-              />
+              <div>
+                <label htmlFor="openHouseInput" style={openHouseTextStyle}>
+                  Open House
+                </label>
+                <textarea
+                  id="openHouseInput"
+                  value={form.openHouse || ""}
+                  onChange={(e) =>
+                    handleFormChange("openHouse", e.target.value)
+                  }
+                />
+              </div>
 
-              <FieldTextarea
-                label="Private Notes"
-                labelStyle={privateNotesStyle}
-                inputId="privateNotesInput"
-                onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-                  handleFormChange("privateNotes", event.target.value)
-                }
-              />
+              <div>
+                <label htmlFor="privateNotesInput" style={privateNotesStyle}>
+                  Private Notes
+                </label>
+                <textarea
+                  id="privateNotesInput"
+                  value={form.privateNotes || ""}
+                  onChange={(e) =>
+                    handleFormChange("privateNotes", e.target.value)
+                  }
+                />
+              </div>
             </div>
           )}
         </div>
       </section>
 
       <hr />
+
+      <button type="button" onClick={handleFormReset}>
+        Reset
+      </button>
 
       <section>
         <h2>Template</h2>
