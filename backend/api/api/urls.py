@@ -28,31 +28,8 @@ api = NinjaAPI()
 
 @api.post("/templates")
 def templates(request, template: TemplateProps):
-    template_object = Template.objects.create(
-        # Core Details
-        status=template.status,
-        address=template.address,
-        bedrooms=template.bedrooms,
-        full_bathrooms=template.full_bathrooms,
-        half_bathrooms=template.half_bathrooms,
-        garage=template.garage,
-        sqft=template.sqft,
-        sqft_lot=template.sqft_lot,
-        listing_price=template.listing_price,
-        age=template.age,
-        # Agent & Area Info
-        listing_agent=template.listing_agent,
-        listing_agent_office=template.listing_agent_office,
-        school_district=template.school_district,
-        arv=template.arv,
-        # Off-market Optionals
-        mls_number=template.mls_number,
-        dom=template.dom,
-        disclosures=template.disclosures,
-        open_house=template.open_house,
-        private_notes=template.private_notes,
-    )
-    print(template_object)
+    # Unpack the dict directly into the create method
+    template_object = Template.objects.create(**template.dict())
 
     return {"status": 201, "id": template_object.id}
 
