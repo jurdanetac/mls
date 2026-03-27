@@ -12,7 +12,7 @@ export const initialState: TemplateProps = {
   listingPrice: 0,
   age: 0,
   status: Status.ACTIVE,
-  dom: undefined,
+  dom: 0,
   listingAgent: "",
   listingAgentOffice: "",
   schoolDistrict: "",

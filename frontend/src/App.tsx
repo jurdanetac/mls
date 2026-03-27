@@ -46,7 +46,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log("form changed");
     // update local storage upon form change
     localStorage.setItem("form", JSON.stringify(form));
   }, [form]);
@@ -54,15 +53,15 @@ const App = () => {
   return (
     <>
       <h1>MLS</h1>
+
       <div style={{ ...flex, gap: "8px", alignItems: "center" }}>
         <select
-          name="status"
-          id="statusSelect"
           value={form.status}
           onChange={(event) =>
             handleFormChange("status", event.target.value as Status)
           }
         >
+          {/* Option for each Status label: db value */}
           {Object.entries(Status).map(([key, value]) => (
             <option key={value} value={value}>
               {formatLabel(key)}
@@ -70,11 +69,14 @@ const App = () => {
           ))}
         </select>
 
+        {/* Visual element for members only listings */}
         <MembersIcon status={form.status} />
       </div>
 
+      {/* Inputs to fill the form */}
       <FormInputs form={form} handleFormChange={handleFormChange} />
 
+      {/* Button that resets the form */}
       <button type="button" onClick={handleFormReset}>
         Reset
       </button>
