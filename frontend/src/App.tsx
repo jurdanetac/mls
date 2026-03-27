@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import "./App.css";
 import CopyTemplateButton from "./components/CopyTemplateButton";
 import MembersIcon from "./components/MembersIcon";
@@ -11,6 +11,7 @@ import { flex } from "./styles";
 
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
+  const [templates, setTemplates] = useState<Array<TemplateProps>>([]);
 
   const handleFormChange = <K extends keyof TemplateProps>(
     field: K,
@@ -50,6 +51,18 @@ const App = () => {
     localStorage.setItem("form", JSON.stringify(form));
   }, [form]);
 
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_BACKEND_API_URL}/templates`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data: TemplateProps[]) => {
+        if (data) setTemplates(data);
+      })
+      .catch((error) => console.error("Error fetching templates:", error));
+  }, []);
+
   return (
     <>
       <h1>MLS</h1>
@@ -85,6 +98,14 @@ const App = () => {
         <h2>Template</h2>
         <Template form={form} />
         <CopyTemplateButton element={templateRef} />
+      </section>
+
+      <section>
+        <ul>
+          {templates?.map((template) => (
+            <li key={template.mlsNumber}>{template.address}</li>
+          ))}
+        </ul>
       </section>
     </>
   );
