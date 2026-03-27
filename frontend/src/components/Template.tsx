@@ -15,6 +15,7 @@ import {
   openHouseTextStyle,
   privateNotesStyle,
 } from "../styles";
+import MembersIcon from "./MembersIcon";
 
 const Template = ({ form }: { form: TemplateProps }) => {
   // Calculations
@@ -60,8 +61,16 @@ const Template = ({ form }: { form: TemplateProps }) => {
           {USDollar.format(pricePerSqft)}/SqFt)
         </p>
         <p style={noSpacing}>Age: {form.age}</p>
-        <p style={noSpacing}>
+        <p
+          style={{
+            ...noSpacing,
+            display: "flex",
+            alignItems: "center",
+            gap: 5,
+          }}
+        >
           Status: {formatLabel(getLabelForStatus(form.status))}
+          <MembersIcon status={form.status} />
         </p>
 
         {form.status === Status.ACTIVE && (

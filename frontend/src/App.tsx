@@ -13,6 +13,7 @@ import {
 } from "./styles";
 import { Status, type TemplateProps } from "./types";
 import { formatLabel } from "./utils/string.utils";
+import MembersIcon from "./components/MembersIcon";
 
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
@@ -75,22 +76,7 @@ const App = () => {
           ))}
         </select>
 
-        <div>
-          {(form.status === Status.MEMBERS_ONLY_SHOW ||
-            form.status === Status.MEMBERS_ONLY_DO_NOT_SHOW) && (
-            <img
-              id="statusIcon"
-              width="16px"
-              height="16px"
-              alt="Status Icon"
-              src={
-                form.status === Status.MEMBERS_ONLY_SHOW
-                  ? greenMUrl
-                  : greenMCrossedUrl
-              }
-            />
-          )}
-        </div>
+        <MembersIcon status={form.status} />
       </div>
 
       <section>
