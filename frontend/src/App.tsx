@@ -1,6 +1,4 @@
 import { useEffect, useReducer } from "react";
-import greenMCrossedUrl from "../assets/green-m-crossed.png";
-import greenMUrl from "../assets/green-m.png";
 import "./App.css";
 import CopyTemplateButton from "./components/CopyTemplateButton";
 import Template from "./components/Template";
