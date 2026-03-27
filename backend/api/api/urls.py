@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from ninja import NinjaAPI
+from typing import List
 
 from models.models import Template
 
@@ -26,8 +27,13 @@ from .types import TemplateProps
 api = NinjaAPI()
 
 
+@api.get("/templates", response=List[TemplateProps])
+def get_templates(request):
+    return Template.objects.all()
+
+
 @api.post("/templates")
-def templates(request, template: TemplateProps):
+def post_templates(request, template: TemplateProps):
     # Unpack the dict directly into the create method
     template_object = Template.objects.create(**template.dict())
 
