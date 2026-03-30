@@ -7,7 +7,6 @@ import formReducer, { initialState } from "./formReducer";
 import FormInputs from "./components/FormInputs";
 import { Status, type TemplateProps } from "./types";
 import { formatLabel } from "./utils/string.utils";
-import { flex } from "./styles";
 
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
@@ -67,7 +66,7 @@ const App = () => {
     <>
       <h1>MLS</h1>
 
-      <div style={{ ...flex, gap: "8px", alignItems: "center" }}>
+      <div>
         <select
           value={form.status}
           onChange={(event) =>

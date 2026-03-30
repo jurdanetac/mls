@@ -1,9 +1,4 @@
 import { Status, type TemplateProps } from "../types";
-import {
-  disclosuresLinkStyle,
-  openHouseTextStyle,
-  privateNotesStyle,
-} from "../styles";
 
 const FormInputs = ({
   form,
@@ -19,8 +14,8 @@ const FormInputs = ({
     <section>
       <h2>Fields</h2>
 
-      <div className="container" id="fieldsContainer">
-        <div className="row">
+      <div id="fieldsContainer">
+        <div>
           <div>
             <label>Address</label>
             <input
@@ -43,7 +38,7 @@ const FormInputs = ({
           )}
         </div>
 
-        <div className="row">
+        <div>
           <div>
             <label>Bedrooms</label>
             <input
@@ -78,7 +73,7 @@ const FormInputs = ({
           </div>
         </div>
 
-        <div className="row">
+        <div>
           <div>
             <label>Garage</label>
             <input
@@ -111,7 +106,7 @@ const FormInputs = ({
           </div>
         </div>
 
-        <div className="row">
+        <div>
           <div>
             <label>
               {form.status === Status.OFF_MARKET
@@ -137,7 +132,7 @@ const FormInputs = ({
           </div>
         </div>
 
-        <div className="row">
+        <div>
           {form.status === Status.ACTIVE && (
             <div>
               <label>DOM</label>
@@ -172,7 +167,7 @@ const FormInputs = ({
           </div>
         </div>
 
-        <div className="row">
+        <div>
           <div>
             <label>School District</label>
             <input
@@ -195,9 +190,9 @@ const FormInputs = ({
         </div>
 
         {form.status !== Status.OFF_MARKET && (
-          <div className="row">
+          <div>
             <div>
-              <label style={disclosuresLinkStyle}>Disclosures</label>
+              <label>Disclosures</label>
               <textarea
                 value={form.disclosures || ""}
                 onChange={(e) =>
@@ -207,7 +202,7 @@ const FormInputs = ({
             </div>
 
             <div>
-              <label style={openHouseTextStyle}>Open House</label>
+              <label>Open House</label>
               <textarea
                 value={form.openHouse || ""}
                 onChange={(e) => handleFormChange("openHouse", e.target.value)}
@@ -215,7 +210,7 @@ const FormInputs = ({
             </div>
 
             <div>
-              <label style={privateNotesStyle}>Private Notes</label>
+              <label>Private Notes</label>
               <textarea
                 value={form.privateNotes || ""}
                 onChange={(e) =>
