@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useEffect, useReducer, useState } from "react";
 import "./App.css";
 import CopyTemplateButton from "./components/CopyTemplateButton";
@@ -64,6 +65,8 @@ const App = () => {
 
   return (
     <>
+      <Button>Click</Button>
+
       <h1>MLS</h1>
 
       <div>
