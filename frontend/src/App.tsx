@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { CircleAlert } from "lucide-react";
 import { useReducer, useState } from "react";
 import "./App.css";
 import CopyElementButton from "./components/CopyElementButton";
@@ -67,25 +68,34 @@ const App = () => {
         <div className="flex gap-2">
           <StatusSelect form={form} handleFormChange={handleFormChange} />
 
-          <hr className="my-8 border-t border-gray-300" />
-
           {/* Visual element for members only listings */}
           <div className="self-center">
             <MembersIcon status={form.status} />
           </div>
         </div>
 
+        <hr className="my-6" />
+
         <FormInputs form={form} handleFormChange={handleFormChange} />
 
-        <hr className="my-8 border-t border-gray-300" />
-
-        <Button onClick={() => dispatch({ type: "FORM_RESET" })}>Reset</Button>
+        <div className="flex justify-end my-4">
+          <Button
+            className="bg-red-600"
+            onClick={() => dispatch({ type: "FORM_RESET" })}
+          >
+            <CircleAlert />
+            Reset
+          </Button>
+        </div>
       </section>
 
+      <hr className="my-6" />
+
       <section>
-        <h2>Template</h2>
         <Template form={form} />
-        <CopyElementButton element={templateRef} />
+        <div className="my-4">
+          <CopyElementButton element={templateRef} />
+        </div>
       </section>
 
       {/*

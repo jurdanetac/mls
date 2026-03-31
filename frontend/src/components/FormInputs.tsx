@@ -1,5 +1,6 @@
-import { Status, type TemplateProps } from "../types";
-import InputField from "./InputField";
+import InputField from "@/components/InputField";
+import TextareaField from "./TextareaField";
+import { Status, type TemplateProps } from "@/types";
 
 const FormInputs = ({
   form,
@@ -37,6 +38,7 @@ const FormInputs = ({
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 handleFormChange("mlsNumber", event.target.value)
               }
+              className="text-lg font-bold"
             />
           </div>
         )}
@@ -199,31 +201,34 @@ const FormInputs = ({
 
       {form.status !== Status.OFF_MARKET && (
         <div className={rowClasses}>
-          <InputField
+          <TextareaField 
             id="disclosuresInput"
             label="Disclosures"
             value={form.disclosures || ""}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
               handleFormChange("disclosures", event.target.value)
             }
+            className="h-32 max-h-32"
           />
 
-          <InputField
+          <TextareaField
             id="openHouseInput"
             label="Open House"
             value={form.openHouse || ""}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               handleFormChange("openHouse", event.target.value)
             }
+            className="h-32 max-h-32"
           />
 
-          <InputField
+          <TextareaField
             id="privateNotesInput"
             label="Private Notes"
             value={form.privateNotes || ""}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               handleFormChange("privateNotes", event.target.value)
             }
+            className="h-32 max-h-32"
           />
         </div>
       )}

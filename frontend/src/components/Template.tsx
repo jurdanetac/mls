@@ -1,13 +1,13 @@
-import type { TemplateProps } from "../types";
-import { Status, getLabelForStatus } from "../types";
+import MembersIcon from "@/components/MembersIcon";
+import { formatStatusLabel } from "@/components/StatusSelect";
+import type { TemplateProps } from "@/types";
+import { Status, getLabelForStatus } from "@/types";
+import { httpifyURL, isValidURL } from "@/utils/string.utils";
 import {
   USDollar,
   USDollarExact,
   numberWithCommas,
 } from "../utils/number.utils";
-import { httpifyURL, isValidURL } from "../utils/string.utils";
-import MembersIcon from "./MembersIcon";
-import { formatStatusLabel } from "./StatusSelect";
 
 const Template = ({ form }: { form: TemplateProps }) => {
   // Calculations
@@ -19,7 +19,8 @@ const Template = ({ form }: { form: TemplateProps }) => {
     <>
       {acquisitionMargin >= 100000 && <h3>Over 100k</h3>}
 
-      <div className="templateContainer">
+      {/* TODO: fix this not finding the element */}
+      <div className="text-sm leading-none [&>p]:m-0" id="templateContainer">
         <p>{form.address ? form.address : "Address not specified"}</p>
 
         <p>
@@ -81,7 +82,11 @@ const Template = ({ form }: { form: TemplateProps }) => {
             {form.disclosures ? (
               <p>
                 {isValidURL(form.disclosures) ? (
-                  <a href={httpifyURL(form.disclosures)}>{form.disclosures}</a>
+                  <a href={httpifyURL(form.disclosures)}>
+                    <span className="text-blue-600 no-underline">
+                      {form.disclosures}
+                    </span>
+                  </a>
                 ) : (
                   <span>{form.disclosures}</span>
                 )}
@@ -98,7 +103,7 @@ const Template = ({ form }: { form: TemplateProps }) => {
           <>
             <p>OH: {form.openHouse ? null : "Not specified"}</p>
             {form.openHouse ? (
-              <span>
+              <span className="whitespace-pre-wrap leading-relaxed">
                 <pre>{form.openHouse}</pre>
               </span>
             ) : null}
@@ -114,9 +119,7 @@ const Template = ({ form }: { form: TemplateProps }) => {
             <p>Private Notes: {form.privateNotes ? null : "Not specified"}</p>
 
             {form.privateNotes ? (
-              <p>
-                <span>{form.privateNotes}</span>
-              </p>
+              <p className="text-orange-900 font-sans">{form.privateNotes}</p>
             ) : null}
           </>
         )}

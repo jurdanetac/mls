@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ClipboardCopy } from "lucide-react";
 
 const copyElementToClipboard = async (element: HTMLElement) => {
   try {
@@ -45,7 +46,11 @@ const copyElementAndOpenMail = async (element: HTMLElement) => {
 
 const CopyElementButton = ({ element }: { element: HTMLElement }) => {
   return (
-    <Button onClick={() => copyElementAndOpenMail(element)}>
+    <Button
+      className="bg-green-600"
+      onClick={() => copyElementAndOpenMail(element)}
+    >
+      <ClipboardCopy />
       Copy Template
     </Button>
   );
