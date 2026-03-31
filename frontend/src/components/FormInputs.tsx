@@ -1,4 +1,5 @@
 import { Status, type TemplateProps } from "../types";
+import InputField from "./InputField";
 
 const FormInputs = ({
   form,
@@ -10,218 +11,223 @@ const FormInputs = ({
     value: TemplateProps[K],
   ) => void;
 }) => {
+  const rowClasses = "flex gap-3";
+
   return (
-    <section>
-      <h2>Fields</h2>
+    <div className="space-y-3" id="fieldsContainer">
+      <div className={rowClasses}>
+        <InputField
+          id="addressInput"
+          label="Address"
+          placeholder="123 Main St."
+          value={form.address}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("address", event.target.value)
+          }
+        />
 
-      <div id="fieldsContainer">
-        <div>
-          <div>
-            <label>Address</label>
-            <input
-              type="text"
-              value={form.address}
-              onChange={(e) => handleFormChange("address", e.target.value)}
-            />
-          </div>
-
-          {/* Don't show mls number input for off markets */}
-          {form.status !== Status.OFF_MARKET && (
-            <div>
-              <label>MLS #</label>
-              <input
-                type="text"
-                value={form.mlsNumber || ""}
-                onChange={(e) => handleFormChange("mlsNumber", e.target.value)}
-              />
-            </div>
-          )}
-        </div>
-
-        <div>
-          <div>
-            <label>Bedrooms</label>
-            <input
-              type="number"
-              value={form.bedrooms}
-              onChange={(e) =>
-                handleFormChange("bedrooms", Number(e.target.value))
-              }
-            />
-          </div>
-
-          <div>
-            <label>Full Bathrooms</label>
-            <input
-              type="number"
-              value={form.fullBathrooms}
-              onChange={(e) =>
-                handleFormChange("fullBathrooms", Number(e.target.value))
-              }
-            />
-          </div>
-
-          <div>
-            <label>Half Bathrooms</label>
-            <input
-              type="number"
-              value={form.halfBathrooms}
-              onChange={(e) =>
-                handleFormChange("halfBathrooms", Number(e.target.value))
-              }
-            />
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <label>Garage</label>
-            <input
-              type="number"
-              value={form.garage}
-              onChange={(e) =>
-                handleFormChange("garage", Number(e.target.value))
-              }
-            />
-          </div>
-
-          <div>
-            <label>SqFt</label>
-            <input
-              type="number"
-              value={form.sqft}
-              onChange={(e) => handleFormChange("sqft", Number(e.target.value))}
-            />
-          </div>
-
-          <div>
-            <label>SqFt Lot</label>
-            <input
-              type="number"
-              value={form.sqftLot}
-              onChange={(e) =>
-                handleFormChange("sqftLot", Number(e.target.value))
-              }
-            />
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <label>
-              {form.status === Status.OFF_MARKET
-                ? "Asking Price ($)"
-                : "Listing Price ($)"}
-            </label>
-            <input
-              type="number"
-              value={form.listingPrice}
-              onChange={(e) =>
-                handleFormChange("listingPrice", Number(e.target.value))
-              }
-            />
-          </div>
-
-          <div>
-            <label>Age</label>
-            <input
-              type="number"
-              value={form.age}
-              onChange={(e) => handleFormChange("age", Number(e.target.value))}
-            />
-          </div>
-        </div>
-
-        <div>
-          {form.status === Status.ACTIVE && (
-            <div>
-              <label>DOM</label>
-              <input
-                type="number"
-                value={form.dom}
-                onChange={(e) =>
-                  handleFormChange("dom", Number(e.target.value))
-                }
-              />
-            </div>
-          )}
-
-          <div>
-            <label>Listing Agent</label>
-            <input
-              type="text"
-              value={form.listingAgent}
-              onChange={(e) => handleFormChange("listingAgent", e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label>Listing Agent Office</label>
-            <input
-              type="text"
-              value={form.listingAgentOffice}
-              onChange={(e) =>
-                handleFormChange("listingAgentOffice", e.target.value)
-              }
-            />
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <label>School District</label>
-            <input
-              type="text"
-              value={form.schoolDistrict}
-              onChange={(e) =>
-                handleFormChange("schoolDistrict", e.target.value)
-              }
-            />
-          </div>
-
-          <div>
-            <label>ARV ($)</label>
-            <input
-              type="number"
-              value={form.arv}
-              onChange={(e) => handleFormChange("arv", Number(e.target.value))}
-            />
-          </div>
-        </div>
-
+        {/* Don't show mls number input for off markets */}
         {form.status !== Status.OFF_MARKET && (
-          <div>
-            <div>
-              <label>Disclosures</label>
-              <textarea
-                value={form.disclosures || ""}
-                onChange={(e) =>
-                  handleFormChange("disclosures", e.target.value)
-                }
-              />
-            </div>
-
-            <div>
-              <label>Open House</label>
-              <textarea
-                value={form.openHouse || ""}
-                onChange={(e) => handleFormChange("openHouse", e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label>Private Notes</label>
-              <textarea
-                value={form.privateNotes || ""}
-                onChange={(e) =>
-                  handleFormChange("privateNotes", e.target.value)
-                }
-              />
-            </div>
+          <div className="w-1/3">
+            <InputField
+              id="mlsNumberInput"
+              label="MLS #"
+              placeholder=""
+              value={form.mlsNumber || ""}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                handleFormChange("mlsNumber", event.target.value)
+              }
+            />
           </div>
         )}
       </div>
-    </section>
+
+      <div className={rowClasses}>
+        <InputField
+          id="bedroomsInput"
+          type="number"
+          label="Bedrooms"
+          placeholder="3"
+          value={form.bedrooms}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("bedrooms", Number(event.target.value))
+          }
+        />
+
+        <InputField
+          id="fullBathroomsInput"
+          type="number"
+          label="Full Bathrooms"
+          placeholder="2"
+          value={form.fullBathrooms}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("fullBathrooms", Number(event.target.value))
+          }
+        />
+
+        <InputField
+          id="halfBathroomsInput"
+          type="number"
+          label="Half Bathrooms"
+          placeholder="1"
+          value={form.halfBathrooms}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("halfBathrooms", Number(event.target.value))
+          }
+        />
+      </div>
+
+      <div className={rowClasses}>
+        <InputField
+          id="garageInput"
+          type="number"
+          label="Garage"
+          placeholder="1"
+          value={form.garage}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("garage", Number(event.target.value))
+          }
+        />
+
+        <InputField
+          id="sqftInput"
+          type="number"
+          label="SqFt"
+          placeholder="1500"
+          value={form.sqft}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("sqft", Number(event.target.value))
+          }
+        />
+
+        <InputField
+          id="sqftLotInput"
+          type="number"
+          label="Lot SqFt"
+          placeholder="11000"
+          value={form.sqftLot}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("sqftLot", Number(event.target.value))
+          }
+        />
+      </div>
+
+      <div className={rowClasses}>
+        <InputField
+          id="listingPriceInput"
+          type="number"
+          label={
+            form.status === Status.OFF_MARKET
+              ? "Asking Price ($)"
+              : "Listing Price ($)"
+          }
+          placeholder="11000"
+          value={form.listingPrice}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("listingPrice", Number(event.target.value))
+          }
+        />
+
+        <InputField
+          id="ageInput"
+          type="number"
+          label="Age"
+          placeholder="85"
+          value={form.age}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("age", Number(event.target.value))
+          }
+        />
+      </div>
+
+      <div className={rowClasses}>
+        {form.status === Status.ACTIVE && (
+          <InputField
+            id="domInput"
+            type="number"
+            label="DOM"
+            placeholder="3"
+            value={form.dom}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              handleFormChange("dom", Number(event.target.value))
+            }
+          />
+        )}
+
+        <InputField
+          id="listingAgentInput"
+          label="Listing Agent"
+          placeholder="John Doe"
+          value={form.listingAgent}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("listingAgent", event.target.value)
+          }
+        />
+
+        <InputField
+          id="listingAgentOfficeInput"
+          label="Listing Agent Office"
+          placeholder="Real Estate Inc"
+          value={form.listingAgentOffice}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("listingAgentOffice", event.target.value)
+          }
+        />
+      </div>
+
+      <div className={rowClasses}>
+        <InputField
+          id="schoolDistrictInput"
+          label="School District"
+          placeholder="San Francisco Unified"
+          value={form.schoolDistrict}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("schoolDistrict", event.target.value)
+          }
+        />
+
+        <InputField
+          id="arvInput"
+          label="ARV ($)"
+          placeholder="1000000"
+          value={form.arv}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            handleFormChange("arv", Number(event.target.value))
+          }
+        />
+      </div>
+
+      {form.status !== Status.OFF_MARKET && (
+        <div className={rowClasses}>
+          <InputField
+            id="disclosuresInput"
+            label="Disclosures"
+            value={form.disclosures || ""}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              handleFormChange("disclosures", event.target.value)
+            }
+          />
+
+          <InputField
+            id="openHouseInput"
+            label="Open House"
+            value={form.openHouse || ""}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              handleFormChange("openHouse", event.target.value)
+            }
+          />
+
+          <InputField
+            id="privateNotesInput"
+            label="Private Notes"
+            value={form.privateNotes || ""}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              handleFormChange("privateNotes", event.target.value)
+            }
+          />
+        </div>
+      )}
+    </div>
   );
 };
 

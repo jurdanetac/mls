@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { useEffect, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import "./App.css";
-import CopyTemplateButton from "./components/CopyTemplateButton";
+import CopyElementButton from "./components/CopyElementButton";
+import FormInputs from "./components/FormInputs";
 import MembersIcon from "./components/MembersIcon";
+import StatusSelect from "./components/StatusSelect";
 import Template from "./components/Template";
 import formReducer, { initialState } from "./formReducer";
-import FormInputs from "./components/FormInputs";
-import { Status, type TemplateProps } from "./types";
-import { formatLabel } from "./utils/string.utils";
+import { type TemplateProps } from "./types";
 
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
@@ -25,14 +25,9 @@ const App = () => {
     });
   };
 
-  const handleFormReset = () => {
-    dispatch({
-      type: "FORM_RESET",
-    });
-  };
-
   const templateRef = document.getElementById("templateContainer")!;
 
+  /*
   // load previous form if any
   useEffect(() => {
     const savedForm = localStorage.getItem("form") || "";
@@ -62,46 +57,38 @@ const App = () => {
       })
       .catch((error) => console.error("Error fetching templates:", error));
   }, []);
+   */
 
   return (
-    <>
-      <Button>Click</Button>
+    <div className="p-3 space-y-5">
+      <section>
+        <h1>MLS</h1>
 
-      <h1>MLS</h1>
+        <div className="flex gap-2">
+          <StatusSelect form={form} handleFormChange={handleFormChange} />
 
-      <div>
-        <select
-          value={form.status}
-          onChange={(event) =>
-            handleFormChange("status", event.target.value as Status)
-          }
-        >
-          {/* Option for each Status label: db value */}
-          {Object.entries(Status).map(([key, value]) => (
-            <option key={value} value={value}>
-              {formatLabel(key)}
-            </option>
-          ))}
-        </select>
+          <hr className="my-8 border-t border-gray-300" />
 
-        {/* Visual element for members only listings */}
-        <MembersIcon status={form.status} />
-      </div>
+          {/* Visual element for members only listings */}
+          <div className="self-center">
+            <MembersIcon status={form.status} />
+          </div>
+        </div>
 
-      {/* Inputs to fill the form */}
-      <FormInputs form={form} handleFormChange={handleFormChange} />
+        <FormInputs form={form} handleFormChange={handleFormChange} />
 
-      {/* Button that resets the form */}
-      <button type="button" onClick={handleFormReset}>
-        Reset
-      </button>
+        <hr className="my-8 border-t border-gray-300" />
+
+        <Button onClick={() => dispatch({ type: "FORM_RESET" })}>Reset</Button>
+      </section>
 
       <section>
         <h2>Template</h2>
         <Template form={form} />
-        <CopyTemplateButton element={templateRef} />
+        <CopyElementButton element={templateRef} />
       </section>
 
+      {/*
       <section>
         <ul>
           {templates?.map((template) => (
@@ -109,7 +96,8 @@ const App = () => {
           ))}
         </ul>
       </section>
-    </>
+       */}
+    </div>
   );
 };
 

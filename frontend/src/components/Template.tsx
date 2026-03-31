@@ -5,8 +5,9 @@ import {
   USDollarExact,
   numberWithCommas,
 } from "../utils/number.utils";
-import { formatLabel, httpifyURL, isValidURL } from "../utils/string.utils";
+import { httpifyURL, isValidURL } from "../utils/string.utils";
 import MembersIcon from "./MembersIcon";
+import { formatStatusLabel } from "./StatusSelect";
 
 const Template = ({ form }: { form: TemplateProps }) => {
   // Calculations
@@ -49,7 +50,7 @@ const Template = ({ form }: { form: TemplateProps }) => {
         <p>Age: {form.age}</p>
 
         <p>
-          Status: {formatLabel(getLabelForStatus(form.status))}
+          Status: {formatStatusLabel(getLabelForStatus(form.status))}
           <MembersIcon status={form.status} />
         </p>
 

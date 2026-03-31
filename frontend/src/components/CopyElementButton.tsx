@@ -1,4 +1,6 @@
-const copyTemplateToClipboard = async (element: HTMLElement) => {
+import { Button } from "@/components/ui/button";
+
+const copyElementToClipboard = async (element: HTMLElement) => {
   try {
     const innerHTML = element.innerHTML;
     const plainText = element.innerText; // Critical fallback
@@ -29,8 +31,8 @@ const openMailClientWithSubject = (element: HTMLElement) => {
   window.location.href = mailToLink;
 };
 
-const copyTemplateAndOpenMail = async (element: HTMLElement) => {
-  await copyTemplateToClipboard(element);
+const copyElementAndOpenMail = async (element: HTMLElement) => {
+  await copyElementToClipboard(element);
 
   const shouldOpenMailClient = window.confirm(
     "Template copied! Do you want to open your email client now?",
@@ -41,12 +43,12 @@ const copyTemplateAndOpenMail = async (element: HTMLElement) => {
   }
 };
 
-const CopyTemplateButton = ({ element }: { element: HTMLElement }) => {
+const CopyElementButton = ({ element }: { element: HTMLElement }) => {
   return (
-    <button type="button" onClick={() => copyTemplateAndOpenMail(element)}>
+    <Button onClick={() => copyElementAndOpenMail(element)}>
       Copy Template
-    </button>
+    </Button>
   );
 };
 
-export default CopyTemplateButton;
+export default CopyElementButton;
