@@ -44,7 +44,13 @@ const copyElementAndOpenMail = async (element: HTMLElement) => {
   }
 };
 
-const CopyElementButton = ({ element }: { element: HTMLElement }) => {
+const CopyElementButton = ({
+  element,
+}: {
+  element: HTMLElement | undefined;
+}) => {
+  if (!element) return null;
+
   return (
     <Button
       className="bg-green-600"

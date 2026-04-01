@@ -201,7 +201,7 @@ const FormInputs = ({
 
       {form.status !== Status.OFF_MARKET && (
         <div className={rowClasses}>
-          <TextareaField 
+          <TextareaField
             id="disclosuresInput"
             label="Disclosures"
             value={form.disclosures || ""}

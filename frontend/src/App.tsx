@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { CircleAlert } from "lucide-react";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import "./App.css";
 import CopyElementButton from "./components/CopyElementButton";
 import FormInputs from "./components/FormInputs";
@@ -13,6 +13,12 @@ import { type TemplateProps } from "./types";
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
   const [templates, setTemplates] = useState<Array<TemplateProps>>([]);
+  const [templateRef, setTemplateRef] = useState<HTMLElement>();
+
+  // locate the template on render
+  useEffect(() => {
+    setTemplateRef(document.getElementById("templateContainer")!);
+  }, []);
 
   const handleFormChange = <K extends keyof TemplateProps>(
     field: K,
@@ -25,8 +31,6 @@ const App = () => {
       value: value,
     });
   };
-
-  const templateRef = document.getElementById("templateContainer")!;
 
   /*
   // load previous form if any
