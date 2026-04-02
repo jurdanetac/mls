@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { CircleAlert } from "lucide-react";
+import { CircleAlert, SaveIcon } from "lucide-react";
 import { useEffect, useReducer, useState } from "react";
 import "./App.css";
 import CopyElementButton from "./components/CopyElementButton";
@@ -14,6 +14,8 @@ const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
   const [templates, setTemplates] = useState<Array<TemplateProps>>([]);
   const [templateRef, setTemplateRef] = useState<HTMLElement>();
+
+  const templatesURL = `${import.meta.env.VITE_BACKEND_API_URL}/templates`;
 
   // locate the template on render
   useEffect(() => {
@@ -51,7 +53,7 @@ const App = () => {
   }, [form]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_API_URL}/templates`)
+    fetch(templatesURL)
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
@@ -100,7 +102,25 @@ const App = () => {
         </div>
       </section>
 
+      <hr className="my-6" />
+
       <section>
+        <Button
+          className="bg-blue-500"
+          onClick={() => {
+            // send the form
+            fetch(templatesURL, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(form),
+            });
+          }}
+        >
+          <SaveIcon />
+          Save
+        </Button>
         <ul>
           {templates?.map((template) => (
             <li key={template.mlsNumber}>{template.address}</li>
