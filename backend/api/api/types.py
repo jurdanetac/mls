@@ -14,21 +14,21 @@ class TemplateProps(Schema):
     status: Status
     address: str
     bedrooms: int
-    full_bathrooms: int
-    half_bathrooms: int
+    fullBathrooms: int
+    halfBathrooms: int
     garage: int
     sqft: int
-    sqft_lot: float
-    listing_price: float
+    sqftLot: float
+    listingPrice: float
     age: int
-    listing_agent: str
-    listing_agent_office: str
-    school_district: str
+    listingAgent: str
+    listingAgentOffice: str
+    schoolDistrict: str
     arv: float
 
     # Off-market Optionals
-    mls_number: Optional[str] = None
+    mlsNumber: Optional[str] = None
     dom: Optional[int] = None
     disclosures: Optional[str] = None
-    open_house: Optional[str] = None
-    private_notes: Optional[str] = None
+    openHouse: Optional[str] = None
+    privateNotes: Optional[str] = None

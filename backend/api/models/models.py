@@ -27,24 +27,24 @@ class Template(models.Model):
 
     address = models.CharField(max_length=255)
     bedrooms = models.PositiveIntegerField()
-    full_bathrooms = models.PositiveIntegerField()
-    half_bathrooms = models.PositiveIntegerField()
+    fullBathrooms = models.PositiveIntegerField()
+    halfBathrooms = models.PositiveIntegerField()
     garage = models.PositiveIntegerField()
     sqft = models.PositiveIntegerField()
-    sqft_lot = models.DecimalField(max_digits=12, decimal_places=2)
-    listing_price = models.DecimalField(max_digits=12, decimal_places=2)
+    sqftLot = models.DecimalField(max_digits=12, decimal_places=2)
+    listingPrice = models.DecimalField(max_digits=12, decimal_places=2)
     age = models.PositiveIntegerField()
-    listing_agent = models.CharField(max_length=100)
-    listing_agent_office = models.CharField(max_length=150)
-    school_district = models.CharField(max_length=150)
+    listingAgent = models.CharField(max_length=100)
+    listingAgentOffice = models.CharField(max_length=150)
+    schoolDistrict = models.CharField(max_length=150)
     arv = models.DecimalField(max_digits=12, decimal_places=2)
 
     # Off-market Optionals
-    mls_number = models.CharField(max_length=50, null=True, blank=True)
+    mlsNumber = models.CharField(max_length=50, null=True, blank=True)
     dom = models.PositiveIntegerField(null=True, blank=True)
     disclosures = models.TextField(null=True, blank=True)
-    open_house = models.CharField(max_length=255, null=True, blank=True)
-    private_notes = models.TextField(null=True, blank=True)
+    openHouse = models.CharField(max_length=255, null=True, blank=True)
+    privateNotes = models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Property Template"
