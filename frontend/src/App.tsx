@@ -12,7 +12,7 @@ import { type TemplateProps } from "./types";
 
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
-  const [templates, setTemplates] = useState<Array<TemplateProps>>([]);
+  // const [templates, setTemplates] = useState<Array<TemplateProps>>([]);
   const [templateRef, setTemplateRef] = useState<HTMLElement>();
 
   // locate the template on render

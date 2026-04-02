@@ -60,10 +60,12 @@ const Template = ({ form }: { form: TemplateProps }) => {
         </p>
         <p style={noSpacing}>Age: {form.age}</p>
 
-        <p style={noSpacing}>
-          Status: {formatStatusLabel(getLabelForStatus(form.status))}
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <p style={noSpacing}>
+            Status: {formatStatusLabel(getLabelForStatus(form.status))}
+          </p>
           <MembersIcon status={form.status} />
-        </p>
+        </div>
 
         {form.status === Status.ACTIVE && (
           <p style={noSpacing}>DOM: {form.dom}</p>
@@ -88,43 +90,43 @@ const Template = ({ form }: { form: TemplateProps }) => {
 
         <br />
 
-        {form.status === Status.OFF_MARKET ? (
+        {form.status === Status.OFF_MARKET && (
           <p style={noSpacing}>Disclosures: N/A </p>
-        ) : (
-          <>
-            <p style={noSpacing}>
-              Disclosures: {form.disclosures ? null : "Not specified"}
-            </p>
-
-            {form.disclosures ? (
-              <p style={noSpacing}>
-                {isValidURL(form.disclosures) ? (
-                  <a href={httpifyURL(form.disclosures)}>
-                    <span style={disclosuresLinkStyle}>{form.disclosures}</span>
-                  </a>
-                ) : (
-                  <span>{form.disclosures}</span>
-                )}
-              </p>
-            ) : null}
-          </>
         )}
+
+        {form.status !== Status.OFF_MARKET && (
+          <p style={noSpacing}>
+            Disclosures: {form.disclosures ? null : "Not specified"}
+          </p>
+        )}
+
+        {form.status !== Status.OFF_MARKET && form.disclosures ? (
+          <p style={noSpacing}>
+            {isValidURL(form.disclosures) ? (
+              <a
+                href={httpifyURL(form.disclosures)}
+                style={disclosuresLinkStyle}
+              >
+                {form.disclosures}
+              </a>
+            ) : (
+              <>{form.disclosures}</>
+            )}
+          </p>
+        ) : null}
 
         <br />
 
         {form.status === Status.OFF_MARKET ? (
           <p style={noSpacing}>OH: N/A </p>
         ) : (
-          <>
-            <p style={noSpacing}>
-              OH: {form.openHouse ? null : "Not specified"}
-            </p>
-            {form.openHouse ? (
-              <span style={openHouseTextStyle}>
-                <pre>{form.openHouse}</pre>
-              </span>
-            ) : null}
-          </>
+          <p style={noSpacing}>OH: {form.openHouse ? null : "Not specified"}</p>
+        )}
+
+        {form.status !== Status.OFF_MARKET && form.openHouse && (
+          <p style={noSpacing}>
+            <pre style={openHouseTextStyle}>{form.openHouse}</pre>
+          </p>
         )}
 
         <br />
@@ -132,15 +134,15 @@ const Template = ({ form }: { form: TemplateProps }) => {
         {form.status === Status.OFF_MARKET ? (
           <p style={noSpacing}>Private Notes: N/A </p>
         ) : (
-          <>
-            <p style={noSpacing}>
-              Private Notes: {form.privateNotes ? null : "Not specified"}
-            </p>
+          <p style={noSpacing}>
+            Private Notes: {form.privateNotes ? null : "Not specified"}
+          </p>
+        )}
 
-            {form.privateNotes ? (
-              <p style={privateNotesStyle}>{form.privateNotes}</p>
-            ) : null}
-          </>
+        {form.status !== Status.OFF_MARKET && form.privateNotes && (
+          <p style={noSpacing}>
+            <span style={privateNotesStyle}>{form.privateNotes}</span>
+          </p>
         )}
 
         <br />
