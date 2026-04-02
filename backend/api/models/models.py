@@ -8,21 +8,21 @@ def format_label(text: str) -> str:
 
 
 class Template(models.Model):
-    class Status(models.TextChoices):
-        # Format: DB_VALUE = 'DB_VALUE', 'Human Readable Label'
-        ON_MARKET = format_label(Status.ACTIVE.name), Status.ACTIVE.value
-        OFF_MARKET = format_label(Status.OFF_MARKET.name), Status.OFF_MARKET.value
-        MEMBERS_ONLY_SHOW = (
-            format_label(Status.MEMBERS_ONLY_SHOW),
-            Status.MEMBERS_ONLY_SHOW.value,
-        )
-        MEMBERS_ONLY_DO_NOT_SHOW = (
-            format_label(Status.MEMBERS_ONLY_DO_NOT_SHOW.name),
-            Status.MEMBERS_ONLY_DO_NOT_SHOW.value,
-        )
-
     status = models.CharField(
-        max_length=25, choices=Status.choices, help_text="Current listing status"
+        max_length=25,
+        choices=[
+            (Status.ACTIVE.value, format_label(Status.ACTIVE.name)),
+            (Status.OFF_MARKET.value, format_label(Status.OFF_MARKET.name)),
+            (
+                Status.MEMBERS_ONLY_SHOW.value,
+                format_label(Status.MEMBERS_ONLY_SHOW.name),
+            ),
+            (
+                Status.MEMBERS_ONLY_DO_NOT_SHOW.value,
+                format_label(Status.MEMBERS_ONLY_DO_NOT_SHOW.name),
+            ),
+        ],
+        help_text="Current listing status",
     )
 
     address = models.CharField(max_length=255)

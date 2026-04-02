@@ -12,7 +12,7 @@ import { type TemplateProps } from "./types";
 
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
-  // const [templates, setTemplates] = useState<Array<TemplateProps>>([]);
+  const [templates, setTemplates] = useState<Array<TemplateProps>>([]);
   const [templateRef, setTemplateRef] = useState<HTMLElement>();
 
   // locate the template on render
@@ -32,7 +32,6 @@ const App = () => {
     });
   };
 
-  /*
   // load previous form if any
   useEffect(() => {
     const savedForm = localStorage.getItem("form") || "";
@@ -62,7 +61,6 @@ const App = () => {
       })
       .catch((error) => console.error("Error fetching templates:", error));
   }, []);
-   */
 
   return (
     <div className="p-3 space-y-5">
@@ -102,7 +100,6 @@ const App = () => {
         </div>
       </section>
 
-      {/*
       <section>
         <ul>
           {templates?.map((template) => (
@@ -110,7 +107,6 @@ const App = () => {
           ))}
         </ul>
       </section>
-       */}
     </div>
   );
 };
