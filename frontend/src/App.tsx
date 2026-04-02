@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { CircleAlert, SaveIcon } from "lucide-react";
+import { CircleAlert, SaveIcon, Type } from "lucide-react";
 import { useEffect, useReducer, useState } from "react";
 import "./App.css";
 import CopyElementButton from "./components/CopyElementButton";
@@ -9,6 +9,7 @@ import StatusSelect from "./components/StatusSelect";
 import Template from "./components/Template";
 import formReducer, { initialState } from "./formReducer";
 import { type TemplateProps } from "./types";
+import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
@@ -53,15 +54,34 @@ const App = () => {
   }, [form]);
 
   useEffect(() => {
+    let isMounted = true; // Prevents updating state if component unmounts
+
     fetch(templatesURL)
       .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
+        // Check for server-side errors (404, 500, etc.)
+        if (!res.ok) {
+          throw new Error(`Server error: ${res.status}`);
+        }
         return res.json();
       })
       .then((data: TemplateProps[]) => {
-        if (data) setTemplates(data);
+        if (isMounted && data) {
+          setTemplates(data);
+        }
       })
-      .catch((error) => console.error("Error fetching templates:", error));
+      .catch((error) => {
+        // Handles network failure (Backend Down) or the error thrown above
+        if (isMounted) {
+          console.error("Error fetching templates:", error);
+          toast.error(
+            "Failed to load templates. Please check if the backend is running.",
+          );
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
@@ -115,12 +135,32 @@ const App = () => {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(form),
-            });
+            })
+              .then((res) => {
+                // 1. Check if the server responded with an error code (4xx or 5xx)
+                if (!res.ok) {
+                  throw new Error(
+                    `Server responded with status: ${res.status}`,
+                  );
+                }
+                return res.json();
+              })
+              .then((data: any) => {
+                toast.success(`Template saved with id: ${data.id}`);
+              })
+              .catch((err) => {
+                // 2. This catches network failures (backend down) OR errors thrown above
+                console.error("Fetch error:", err);
+                toast.error(
+                  "Could not connect to the server. Is the backend running?",
+                );
+              });
           }}
         >
           <SaveIcon />
           Save
         </Button>
+        <Toaster />
         <ul>
           {templates?.map((template) => (
             <li key={template.mlsNumber}>{template.address}</li>
