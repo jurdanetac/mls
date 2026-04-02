@@ -1,15 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { CircleAlert, SaveIcon, Type } from "lucide-react";
+import { CircleAlert, SaveIcon } from "lucide-react";
 import { useEffect, useReducer, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import "./App.css";
 import CopyElementButton from "./components/CopyElementButton";
 import FormInputs from "./components/FormInputs";
 import MembersIcon from "./components/MembersIcon";
 import StatusSelect from "./components/StatusSelect";
 import Template from "./components/Template";
+import TemplatesTable from "./components/TemplatesTable";
 import formReducer, { initialState } from "./formReducer";
 import { type TemplateProps } from "./types";
-import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
@@ -162,9 +163,10 @@ const App = () => {
         </Button>
         <Toaster />
         <ul>
-          {templates?.map((template) => (
+          {/* {templates?.map((template) => (
             <li key={template.mlsNumber}>{template.address}</li>
-          ))}
+          ))} */}
+          <TemplatesTable />
         </ul>
       </section>
     </div>
