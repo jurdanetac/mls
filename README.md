@@ -1,12 +1,14 @@
 # frontend
-React + TypeScript + Vite
+React + TailwindCSS + shacdn + TypeScript + Vite
 
 ## features wishlist
+- **PRIORITY**: Display templates from backend in a table
 - **PRIORITY**: Alert on clear button press
-- **PRIORITY**: Send contact/opportunity creation request to GHL webhook
+- **PRIORITY**: Allow SqFt addition inputs
 - Allow unknown asking price for off markets
 - Tab-separated text textarea parser
-- Basic styling
+~~- Basic styling~~
+~~- **PRIORITY**: Send contact/opportunity creation request to GHL webhook~~
 ~~- **PRIORITY**: Save form state on localStorage so that it persists on page refresh~~
 - ~~**PRIORITY**: Change the FieldInputs to be normal inputs again~~
 - ~~**PRIORITY**: Add functionality to on/off market toggle~~
@@ -19,6 +21,6 @@ React + TypeScript + Vite
 Python + Django + Ninja
 
 ## features wishlist
-- **PRIORITY**: Save the forms on sqlite
 - **PRIORITY**: Generate a report on today's properties with over $100k acquisition margin
 - Generate email template for the daily report
+~~- **PRIORITY**: Save the forms on sqlite~~
