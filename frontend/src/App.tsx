@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { CircleAlert, SaveIcon, Type } from "lucide-react";
+import { CircleAlert, SaveIcon } from "lucide-react";
 import { useEffect, useReducer, useState } from "react";
 import "./App.css";
 import CopyElementButton from "./components/CopyElementButton";
