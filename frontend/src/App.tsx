@@ -10,6 +10,7 @@ import Template from "./components/Template";
 import formReducer, { initialState } from "./formReducer";
 import { type TemplateProps } from "./types";
 import toast, { Toaster } from "react-hot-toast";
+import TemplatesTable from "./components/TemplatesTable";
 
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
@@ -161,11 +162,7 @@ const App = () => {
           Save
         </Button>
         <Toaster />
-        <ul>
-          {templates?.map((template) => (
-            <li key={template.mlsNumber}>{template.address}</li>
-          ))}
-        </ul>
+        <TemplatesTable templates={templates} />
       </section>
     </div>
   );
