@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { CircleAlert } from "lucide-react";
 import { useEffect, useReducer, useState } from "react";
 import "./App.css";
+import AIAutoComplete from "./components/AIAutoComplete";
 import CopyElementButton from "./components/CopyElementButton";
 import FormInputs from "./components/FormInputs";
 import MembersIcon from "./components/MembersIcon";
@@ -54,13 +55,16 @@ const App = () => {
       <section>
         <h1>MLS</h1>
 
-        <div className="flex gap-2">
-          <StatusSelect form={form} handleFormChange={handleFormChange} />
-
-          {/* Visual element for members only listings */}
-          <div className="self-center">
-            <MembersIcon status={form.status} />
+        <div className="flex justify-between">
+          <div className="flex gap-2 items-center">
+            <StatusSelect form={form} handleFormChange={handleFormChange} />
+            {/* Visual element for members only listings */}
+            <div className="self-center">
+              <MembersIcon status={form.status} />
+            </div>
           </div>
+
+          <AIAutoComplete handleFormChange={handleFormChange} />
         </div>
 
         <hr className="my-6" />
