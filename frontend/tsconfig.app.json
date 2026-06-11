@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     // shacdn
-    "baseUrl": ".",
+    // "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },

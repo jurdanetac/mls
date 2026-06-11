@@ -56,12 +56,9 @@ const App = () => {
         <h1>MLS</h1>
 
         <div className="flex justify-between">
-          <div className="flex gap-2 items-center">
+          <div className="flex">
             <StatusSelect form={form} handleFormChange={handleFormChange} />
-            {/* Visual element for members only listings */}
-            <div className="self-center">
-              <MembersIcon status={form.status} />
-            </div>
+            <MembersIcon status={form.status} />
           </div>
 
           <AIAutoComplete handleFormChange={handleFormChange} />
