@@ -117,9 +117,9 @@ export const prompt = ({
 }) => {
   return `
         Please parse the following plaintext and extract the relevant property information into the schema.
-        Return only the json object for the following schema. Read the schema carefully since there are the
-        instructions for what you have to do. Remember your response will be parsed by JSON.parse(response.text).
-        Also, do not alter any of the information, please be faithful to the source you receive.
+        Return only the json object for the following schema, do not add your format backticks either, just the raw object.
+        Read the schema carefully since there are the instructions for what you have to do. Remember your response will be
+        parsed by JSON.parse(response.text). Also, do not alter any of the information, please be faithful to the source you receive.
 
         PLAINTEXT STARTS HERE:
         ${listing}

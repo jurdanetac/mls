@@ -22,18 +22,14 @@ const copyElementToClipboard = async (element: HTMLElement) => {
   }
 };
 
-const CopyElementButton = ({
-  element,
-}: {
-  element: HTMLElement | undefined;
-}) => {
-  if (!element) return null;
+const CopyTemplateButton = () => {
+  const template = document.getElementById("templateContainer")!;
 
   return (
     <Button
       className="bg-green-600"
       onClick={async () => {
-        await copyElementToClipboard(element);
+        await copyElementToClipboard(template);
         window.alert("Template copied!");
       }}
     >
@@ -43,4 +39,4 @@ const CopyElementButton = ({
   );
 };
 
-export default CopyElementButton;
+export default CopyTemplateButton;

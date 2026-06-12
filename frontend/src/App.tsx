@@ -1,24 +1,16 @@
-import { Button } from "@/components/ui/button";
-import { CircleAlert } from "lucide-react";
 import { useEffect, useReducer, useState } from "react";
-import "./App.css";
 import AIAutoComplete from "./components/AIAutoComplete";
-import CopyElementButton from "./components/CopyElementButton";
-import FormInputs from "./components/FormInputs";
-import MembersIcon from "./components/MembersIcon";
+import Form from "./components/Form";
 import StatusSelect from "./components/StatusSelect";
 import Template from "./components/Template";
+import { Button } from "./components/ui/button";
+import { ButtonGroup } from "./components/ui/button-group";
 import formReducer, { initialState } from "./formReducer";
 import { type TemplateProps } from "./types";
 
 const App = () => {
   const [form, dispatch] = useReducer(formReducer, initialState);
-  const [templateRef, setTemplateRef] = useState<HTMLElement>();
-
-  // locate the template on render
-  useEffect(() => {
-    setTemplateRef(document.getElementById("templateContainer")!);
-  }, []);
+  const [showTemplate, setShowTemplate] = useState<boolean>(true);
 
   const handleFormChange = <K extends keyof TemplateProps>(
     field: K,
@@ -31,6 +23,7 @@ const App = () => {
       value: value,
     });
   };
+  const resetForm = () => dispatch({ type: "FORM_RESET" });
 
   // load previous form if any
   useEffect(() => {
@@ -50,43 +43,50 @@ const App = () => {
     localStorage.setItem("form", JSON.stringify(form));
   }, [form]);
 
+  const sectionStyles = "border border-gray-200 rounded-2xl p-5 shadow-xl";
+
   return (
-    <div className="p-3 space-y-5">
-      <section>
+    <div className="p-5">
+      <header className={sectionStyles}>
         <h1>MLS</h1>
-
-        <div className="flex justify-between">
-          <div className="flex">
-            <StatusSelect form={form} handleFormChange={handleFormChange} />
-            <MembersIcon status={form.status} />
-          </div>
-
-          <AIAutoComplete handleFormChange={handleFormChange} />
-        </div>
-
-        <hr className="my-6" />
-
-        <FormInputs form={form} handleFormChange={handleFormChange} />
-
-        <div className="flex justify-end my-4">
+        <ButtonGroup className="mb-5">
           <Button
-            className="bg-red-600"
-            onClick={() => dispatch({ type: "FORM_RESET" })}
+            className={showTemplate ? "" : "bg-gray-100"}
+            variant="outline"
+            onClick={() => setShowTemplate(false)}
           >
-            <CircleAlert />
-            Reset
+            Form
           </Button>
-        </div>
-      </section>
+          <Button
+            className={showTemplate ? "bg-gray-100" : ""}
+            variant="outline"
+            onClick={() => setShowTemplate(true)}
+          >
+            Template
+          </Button>
+        </ButtonGroup>
 
-      <hr className="my-6" />
+        <AIAutoComplete handleFormChange={handleFormChange} />
+      </header>
 
-      <section>
-        <Template form={form} />
-        <div className="my-4">
-          <CopyElementButton element={templateRef} />
-        </div>
-      </section>
+      <hr className="my-10" />
+
+      <main className={sectionStyles}>
+        {showTemplate ? (
+          <Template form={form} />
+        ) : (
+          <>
+            {showTemplate ? null : (
+              <StatusSelect form={form} handleFormChange={handleFormChange} />
+            )}
+            <Form
+              form={form}
+              handleFormChange={handleFormChange}
+              resetForm={resetForm}
+            />
+          </>
+        )}
+      </main>
     </div>
   );
 };

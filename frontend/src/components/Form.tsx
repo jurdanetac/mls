@@ -1,16 +1,20 @@
 import InputField from "@/components/InputField";
 import TextareaField from "./TextareaField";
 import { Status, type TemplateProps } from "@/types";
+import { Button } from "@/components/ui/button";
+import { CircleAlert } from "lucide-react";
 
-const FormInputs = ({
+const Form = ({
   form,
   handleFormChange,
+  resetForm,
 }: {
   form: TemplateProps;
   handleFormChange: <K extends keyof TemplateProps>(
     field: K,
     value: TemplateProps[K],
   ) => void;
+  resetForm: () => void;
 }) => {
   const rowClasses = "flex gap-3";
 
@@ -232,8 +236,16 @@ const FormInputs = ({
           />
         </div>
       )}
+
+      <Button
+        onClick={resetForm}
+        className="bg-red-600 hover:bg-red-700 text-white"
+      >
+        <CircleAlert />
+        Reset
+      </Button>
     </div>
   );
 };
 
-export default FormInputs;
+export default Form;

@@ -1,3 +1,4 @@
+import MembersIcon from "@/components/MembersIcon";
 import {
   Select,
   SelectContent,
@@ -26,27 +27,32 @@ type StatusSelectProps = {
 
 const StatusSelect = ({ form, handleFormChange }: StatusSelectProps) => {
   return (
-    <Select
-      value={form.status}
-      onValueChange={(value: string) =>
-        handleFormChange("status", value as Status)
-      }
-    >
-      <SelectTrigger className="w-full max-w-48">
-        <SelectValue placeholder="Select a status" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Status</SelectLabel>
-          {/* Option for each Status label: db value */}
-          {Object.entries(Status).map(([key, value]) => (
-            <SelectItem key={key} value={value}>
-              {formatStatusLabel(key)}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <div className="flex gap-3 items-center mb-5">
+      <Select
+        value={form.status}
+        onValueChange={(value: string) =>
+          handleFormChange("status", value as Status)
+        }
+      >
+        <SelectTrigger>
+          <SelectValue placeholder="Select a status" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Status</SelectLabel>
+            {/* Option for each Status label: db value */}
+            {Object.entries(Status).map(([key, value]) => (
+              <SelectItem key={key} value={value}>
+                {formatStatusLabel(key)}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <div>
+        <MembersIcon status={form.status} />
+      </div>
+    </div>
   );
 };
 

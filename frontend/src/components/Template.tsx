@@ -16,6 +16,7 @@ import {
   USDollarExact,
   numberWithCommas,
 } from "../utils/number.utils";
+import CopyTemplateButton from "@/components/CopyTemplateButton";
 
 const Template = ({ form }: { form: TemplateProps }) => {
   // Calculations
@@ -34,7 +35,7 @@ const Template = ({ form }: { form: TemplateProps }) => {
         </p>
 
         <p style={noSpacing}>
-          {form.mlsNumber && (
+          {form.status !== Status.OFF_MARKET && form.mlsNumber && (
             <>
               MLS #: <span style={mlsNumberStyle}>{form.mlsNumber}</span>
             </>
@@ -149,6 +150,8 @@ const Template = ({ form }: { form: TemplateProps }) => {
 
         <p style={noSpacing}>MLS Comps attached:</p>
       </div>
+
+      <CopyTemplateButton />
     </>
   );
 };
