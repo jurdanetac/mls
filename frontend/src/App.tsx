@@ -79,11 +79,20 @@ const App = () => {
             {showTemplate ? null : (
               <StatusSelect form={form} handleFormChange={handleFormChange} />
             )}
-            <Form
-              form={form}
-              handleFormChange={handleFormChange}
-              resetForm={resetForm}
-            />
+
+            <div className="flex gap-5">
+              <div className="grow">
+                <Form
+                  form={form}
+                  handleFormChange={handleFormChange}
+                  resetForm={resetForm}
+                />
+              </div>
+
+              <div className="hidden md:block">
+                <Template form={form} />
+              </div>
+            </div>
           </>
         )}
       </main>

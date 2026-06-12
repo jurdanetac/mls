@@ -62,7 +62,7 @@ const AIAutoComplete = ({
             }
           }
         }}
-        className="bg-gradient-to-r from-[#1A73E8] via-[#7460EE] to-[#E33E84] text-white"
+        className="bg-linear-to-r from-[#1A73E8] via-[#7460EE] to-[#E33E84] text-white"
       >
         <Brain />
         Auto Complete

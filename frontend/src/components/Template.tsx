@@ -61,12 +61,16 @@ const Template = ({ form }: { form: TemplateProps }) => {
         </p>
         <p style={noSpacing}>Age: {form.age}</p>
 
-        <div style={{ display: "flex", gap: "0.5rem" }}>
-          <p style={noSpacing}>
-            Status: {formatStatusLabel(getLabelForStatus(form.status))}
-          </p>
-          <MembersIcon status={form.status} />
-        </div>
+        <p style={noSpacing}>
+          <div className="flex items-center gap-2">
+            <span>
+              Status: {formatStatusLabel(getLabelForStatus(form.status))}
+            </span>
+            <span>
+              <MembersIcon status={form.status} />
+            </span>
+          </div>
+        </p>
 
         {form.status === Status.ACTIVE && (
           <p style={noSpacing}>DOM: {form.dom}</p>
